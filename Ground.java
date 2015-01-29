@@ -2,7 +2,6 @@ package com.TeamFlowerShop.game;
 
 import java.io.*;
 import java.util.*;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -29,20 +28,20 @@ public class Ground {
 	int groundSquareDims = 128;
 	public void Update(int UniversalXPos, int UniversalYPos)
 	{
-		for (float i = UniversalXPos; i < (Gdx.graphics.getWidth() + UniversalXPos) / groundSquareDims; i++)
+		int numX = Gdx.graphics.getWidth() / groundSquareDims;
+		int numY = Gdx.graphics.getHeight() / groundSquareDims;
+		
+		for (int i = 0; i < numX; i++)
 		{
-			for (float j = UniversalYPos; j < (Gdx.graphics.getHeight() + UniversalYPos) / groundSquareDims; j++)
+			for (int j = 0; j < numY; j++)
 			{
-				
-				/*if (!pieces.contains(new GroundPiece(1, (i * groundSquareDims), (j * groundSquareDims))) && 
-						!pieces.contains(new GroundPiece(2, (i * groundSquareDims), (j * groundSquareDims))) 
-						&& !pieces.contains(new GroundPiece(3, (i * groundSquareDims), (j * groundSquareDims))) 
-						&& !pieces.contains(new GroundPiece(4, (i * groundSquareDims), (j * groundSquareDims))))
+				if (!pieces.contains(new GroundPiece(1, i * groundSquareDims, j * groundSquareDims)) &&
+					!pieces.contains(new GroundPiece(2, i * groundSquareDims, j * groundSquareDims)) &&
+					!pieces.contains(new GroundPiece(3, i * groundSquareDims, j * groundSquareDims)) &&
+					!pieces.contains(new GroundPiece(4, i * groundSquareDims, j * groundSquareDims)))
 				{
-					pieces.add(new GroundPiece((int)Math.floor(4 * Math.random()), (i * groundSquareDims) + 
-							UniversalXPos, (j * groundSquareDims) + UniversalYPos));
-					System.out.println(pieces.size());
-				}*/
+					pieces.add(new GroundPiece((int)(Math.random() * 4), i * groundSquareDims, j * groundSquareDims));
+				}
 			}
 		}
 		
