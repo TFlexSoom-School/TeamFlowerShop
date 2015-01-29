@@ -28,23 +28,31 @@ public class Ground {
 	int groundSquareDims = 128;
 	public void Update(int UniversalXPos, int UniversalYPos)
 	{
-		int numX = Gdx.graphics.getWidth() / groundSquareDims;
-		int numY = Gdx.graphics.getHeight() / groundSquareDims;
-		
-		for (int i = 0; i < numX; i++)
+		int Xnum = 0, Ynum = 0;
+		for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
 		{
-			for (int j = 0; j < numY; j++)
+			if (i % groundSquareDims == 0)
+				Xnum = i;
+		}
+		for (int i = UniversalYPos - groundSquareDims; i < UniversalYPos; i++)
+		{
+			if (i % groundSquareDims == 0)
+				Ynum = i;
+		}
+		for (int i = Xnum; i < (Xnum + Gdx.graphics.getWidth() 
+				+ groundSquareDims); i += groundSquareDims)
+		{
+			for (int j = Ynum; j < (Ynum + Gdx.graphics.getHeight() 
+					+ groundSquareDims); j += groundSquareDims)
 			{
-				if (!pieces.contains(new GroundPiece(1, i * groundSquareDims, j * groundSquareDims)) &&
-					!pieces.contains(new GroundPiece(2, i * groundSquareDims, j * groundSquareDims)) &&
-					!pieces.contains(new GroundPiece(3, i * groundSquareDims, j * groundSquareDims)) &&
-					!pieces.contains(new GroundPiece(4, i * groundSquareDims, j * groundSquareDims)))
+				if (!Contains(new GroundPiece(1, i, j), pieces))
 				{
-					pieces.add(new GroundPiece((int)(Math.random() * 4), i * groundSquareDims, j * groundSquareDims));
+					pieces.add(new GroundPiece(3, i, j));
+					System.out.println(pieces.size());
+					System.out.println(Contains(new GroundPiece(3, i, j), pieces));
 				}
 			}
 		}
-		
 		//pieces.add(new GroundPiece(1, 0, 0));
 		
 		for (GroundPiece gp : pieces)
@@ -61,5 +69,22 @@ public class Ground {
 			batch.draw(gp.GroundTex, gp.posX + gp.universalX, gp.posY + gp.universalY);
 			batch.end();
 		}
+	}
+	
+	public boolean Contains(GroundPiece gp, ArrayList<GroundPiece> comparer)
+	{
+		boolean result = false;
+		for (int i = 0; i < comparer.size() - 1; i ++)
+		{
+			gp.universalX = comparer.get(i).universalX;
+			gp.universalY = comparer.get(i).universalY;
+			gp.GroundTex = comparer.get(i).GroundTex;
+			
+			if (gp == comparer.get(i))
+			{
+				result = true;
+			}
+		}
+		return result;
 	}
 }
