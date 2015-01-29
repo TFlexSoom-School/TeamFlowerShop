@@ -28,32 +28,23 @@ public class Ground {
 	int groundSquareDims = 128;
 	public void Update(int UniversalXPos, int UniversalYPos)
 	{
-		int Xnum = 0, Ynum = 0;
-		for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
+		for (int x = UniversalXPos - groundSquareDims; x < UniversalXPos + Gdx.graphics.getWidth() + groundSquareDims; x++)
 		{
-			if (i % groundSquareDims == 0)
-				Xnum = i;
-		}
-		for (int i = UniversalYPos - groundSquareDims; i < UniversalYPos; i++)
-		{
-			if (i % groundSquareDims == 0)
-				Ynum = i;
-		}
-		for (int i = Xnum; i < (Xnum + Gdx.graphics.getWidth() 
-				+ groundSquareDims); i += groundSquareDims)
-		{
-			for (int j = Ynum; j < (Ynum + Gdx.graphics.getHeight() 
-					+ groundSquareDims); j += groundSquareDims)
+			if (x % groundSquareDims == 0)
 			{
-				if (!Contains(new GroundPiece(1, i, j), pieces))
+				for (int y = UniversalYPos - groundSquareDims; y < UniversalYPos + Gdx.graphics.getHeight() + groundSquareDims; y++)
 				{
-					pieces.add(new GroundPiece(3, i, j));
-					System.out.println(pieces.size());
-					System.out.println(Contains(new GroundPiece(3, i, j), pieces));
+					if (y % groundSquareDims == 0)
+					{
+						if (!Contains(new GroundPiece(1, x, y), pieces))
+						{
+							pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), x, y));
+							System.out.println(pieces.size());
+						}
+					}
 				}
 			}
 		}
-		//pieces.add(new GroundPiece(1, 0, 0));
 		
 		for (GroundPiece gp : pieces)
 		{
@@ -66,7 +57,7 @@ public class Ground {
 		for (GroundPiece gp : pieces)
 		{
 			batch.begin();
-			batch.draw(gp.GroundTex, gp.posX + gp.universalX, gp.posY + gp.universalY);
+			batch.draw(gp.GroundTex, (gp.posX + gp.universalX), (gp.posY + gp.universalY));
 			batch.end();
 		}
 	}
@@ -76,11 +67,8 @@ public class Ground {
 		boolean result = false;
 		for (int i = 0; i < comparer.size() - 1; i ++)
 		{
-			gp.universalX = comparer.get(i).universalX;
-			gp.universalY = comparer.get(i).universalY;
-			gp.GroundTex = comparer.get(i).GroundTex;
-			
-			if (gp == comparer.get(i))
+			if (gp.posX == comparer.get(i).posX &&
+				gp.posX == comparer.get(i).posX)
 			{
 				result = true;
 			}
