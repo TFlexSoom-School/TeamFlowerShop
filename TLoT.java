@@ -143,13 +143,4 @@ public class TLoT extends ApplicationAdapter {
 			}
 		}
 	}
-	
-	public int Collision (Rectangle one, Rectangle two)
-	{
-		if (one.overlaps(two))
-		{
-			
-		}
-		return 0;
-	}
 }
