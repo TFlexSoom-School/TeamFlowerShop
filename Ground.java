@@ -25,139 +25,169 @@ public class Ground {
 		
 	}
 	
-	int groundSquareDims = 128;
+	int groundSquareDims = new Texture("gsquare1.png").getHeight();
 	int numX, numY;
+	int timer = 0;
 	
 	public void UpdateRender(int UniversalXPos, int UniversalYPos)
 	{
-		for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
-			if (i % groundSquareDims == 0)
-			{
-				numX = i;
-				break;
-			}
-		
-		for (int i = UniversalYPos - groundSquareDims; i < UniversalYPos; i++)
-			if (i % groundSquareDims == 0)
-			{
-				numY = i;
-				break;
-			}
-		
-		do
+		/*if (timer % 40 == 0)
 		{
-			do 
-			{
-				if (!Contains(new GroundPiece(1, numX, numY), pieces))
+			for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
+				if (i % groundSquareDims == 0)
 				{
-					pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), numX, numY));
+					numX = i;
+					break;
 				}
-				
-				numY += groundSquareDims;
-			}
-			while (numY < UniversalYPos + Gdx.graphics.getHeight() * 3);
 			
-			numX += groundSquareDims;
-		}
-		while (numX < UniversalXPos + Gdx.graphics.getWidth() * 3);
-		
-		for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
-			if (i % groundSquareDims == 0)
-			{
-				numX = i;
-				break;
-			}
-		
-		for (int i = UniversalYPos - groundSquareDims; i < UniversalYPos; i++)
-			if (i % groundSquareDims == 0)
-			{
-				numY = i;
-				break;
-			}
-		
-		do
-		{
-			do 
-			{
-				if (!Contains(new GroundPiece(1, numX, numY), pieces))
+			for (int i = UniversalYPos - groundSquareDims; i < UniversalYPos; i++)
+				if (i % groundSquareDims == 0)
 				{
-					pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), numX, numY));
+					numY = i;
+					break;
 				}
+			
+			do
+			{
+				do 
+				{
+					if (!Contains(new GroundPiece(1, numX, numY), pieces))
+					{
+						pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), numX, numY));
+					}
+					
+					numY += groundSquareDims;
+				}
+				while (numY < UniversalYPos + Gdx.graphics.getHeight() * 3);
 				
 				numX += groundSquareDims;
 			}
 			while (numX < UniversalXPos + Gdx.graphics.getWidth() * 3);
 			
-			numY += groundSquareDims;
-		}
-		while (numY < UniversalYPos + Gdx.graphics.getHeight() * 3);
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		for (int i = UniversalXPos + Gdx.graphics.getWidth() - groundSquareDims; i < UniversalXPos + Gdx.graphics.getWidth() + groundSquareDims; i++)
-			if (i % groundSquareDims == 0)
-			{
-				numX = i;
-				break;
-			}
-		
-		for (int i = UniversalYPos - groundSquareDims; i < UniversalYPos; i++)
-			if (i % groundSquareDims == 0)
-			{
-				numY = i;
-				break;
-			}
-		
-		do
-		{
-			do 
-			{
-				if (!Contains(new GroundPiece(1, numX, numY), pieces))
+			for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
+				if (i % groundSquareDims == 0)
 				{
-					pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), numX, numY));
+					numX = i;
+					break;
 				}
+			
+			for (int i = UniversalYPos - groundSquareDims; i < UniversalYPos; i++)
+				if (i % groundSquareDims == 0)
+				{
+					numY = i;
+					break;
+				}
+			
+			do
+			{
+				do 
+				{
+					if (!Contains(new GroundPiece(1, numX, numY), pieces))
+					{
+						pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), numX, numY));
+					}
+					
+					numX += groundSquareDims;
+				}
+				while (numX < UniversalXPos + Gdx.graphics.getWidth() * 3);
 				
 				numY += groundSquareDims;
 			}
 			while (numY < UniversalYPos + Gdx.graphics.getHeight() * 3);
-			
-			numX -= groundSquareDims;
-		}
-		while (numX > UniversalXPos);
-		
-		for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
-			if (i % groundSquareDims == 0)
-			{
-				numX = i;
-				break;
-			}
-		
-		for (int i = UniversalYPos + Gdx.graphics.getHeight() - groundSquareDims; i < UniversalYPos + Gdx.graphics.getHeight() + groundSquareDims; i++)
-			if (i % groundSquareDims == 0)
-			{
-				numY = i;
-				break;
-			}
-		
-		do
-		{
-			do 
-			{
-				if (!Contains(new GroundPiece(1, numX, numY), pieces))
+			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			for (int i = UniversalXPos + Gdx.graphics.getWidth() - groundSquareDims; i < UniversalXPos + Gdx.graphics.getWidth() + groundSquareDims; i++)
+				if (i % groundSquareDims == 0)
 				{
-					pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), numX, numY));
+					numX = i;
+					break;
 				}
-				
-				numX += groundSquareDims;
-			}
-			while (numX < UniversalXPos + Gdx.graphics.getWidth() * 3);
 			
-			numY -= groundSquareDims;
-		}
-		while (numY > UniversalYPos);
+			for (int i = UniversalYPos - groundSquareDims; i < UniversalYPos; i++)
+				if (i % groundSquareDims == 0)
+				{
+					numY = i;
+					break;
+				}
+			
+			do
+			{
+				do 
+				{
+					if (!Contains(new GroundPiece(1, numX, numY), pieces))
+					{
+						pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), numX, numY));
+					}
+					
+					numY += groundSquareDims;
+				}
+				while (numY < UniversalYPos + Gdx.graphics.getHeight() * 3);
+				
+				numX -= groundSquareDims;
+			}
+			while (numX > UniversalXPos);
+			
+			for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
+				if (i % groundSquareDims == 0)
+				{
+					numX = i;
+					break;
+				}
+			
+			for (int i = UniversalYPos + Gdx.graphics.getHeight() - groundSquareDims; i < UniversalYPos + Gdx.graphics.getHeight() + groundSquareDims; i++)
+				if (i % groundSquareDims == 0)
+				{
+					numY = i;
+					break;
+				}
+			
+			do
+			{
+				do 
+				{
+					if (!Contains(new GroundPiece(1, numX, numY), pieces))
+					{
+						pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), numX, numY));
+					}
+					
+					numX += groundSquareDims;
+				}
+				while (numX < UniversalXPos + Gdx.graphics.getWidth() * 3);
+				
+				numY -= groundSquareDims;
+			}
+			while (numY > UniversalYPos);
+		}*/
 	}
 	
 	public void Update(int UniversalXPos, int UniversalYPos)
 	{
 		UpdateRender(UniversalXPos, UniversalYPos);
+		
+		for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
+			if (i % groundSquareDims == 0)
+			{
+				numX = i;
+				break;
+			}
+		for (int i = UniversalYPos - groundSquareDims; i < UniversalYPos; i++)
+			if (i % groundSquareDims == 0)
+			{
+				numY = i;
+				break;
+			}
+		
+		while (numX < UniversalXPos + Gdx.graphics.getWidth() + groundSquareDims * 4)
+		{
+			while (numY < UniversalYPos + Gdx.graphics.getHeight())
+			{
+				if (!Contains(new GroundPiece(1, numX, numY), pieces))
+				{
+					pieces.add(new GroundPiece(1, numX, numY));
+				}
+				numY += groundSquareDims;
+			}
+			numX += groundSquareDims;
+		}
 		
 		for (GroundPiece gp : pieces)
 		{
@@ -165,7 +195,7 @@ public class Ground {
 		}
 	}
 	
-	public void Draw()
+	public void Draw(int ux, int uy)
 	{
 		for (GroundPiece gp : pieces)
 		{
