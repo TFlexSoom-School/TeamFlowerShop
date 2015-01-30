@@ -21,6 +21,8 @@ public class Bullet {
 	double velocityX, velocityY;
 	double rotation;
 	
+	Rectangle bulletRect;
+	
 	public Bullet (double VelocityX, double VelocityY, float PosX, float PosY, double Rotation, int UniversalX, int UniversalY){
 		batch = new SpriteBatch();
 		bulletTex = new Texture("Bullet.png");
@@ -39,6 +41,8 @@ public class Bullet {
 	}
 	
 	public void Update(int UniversalX, int UniversalY){
+		bulletRect= new Rectangle(posX, posY, bulletTex.getWidth(), bulletTex.getHeight());
+		
 		posX -= velocityX;
 		posY -= velocityY;
 	}
