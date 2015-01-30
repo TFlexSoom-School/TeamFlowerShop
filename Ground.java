@@ -45,10 +45,13 @@ public class Ground {
 				break;
 			}
 		}
+		
 		for (int x = numX; x < UniversalXPos + Gdx.graphics.getWidth(); x += groundSquareDims)
 		{
+			System.out.println(x);
 			for (int y = numY; y < UniversalYPos + Gdx.graphics.getHeight(); y += groundSquareDims)
 			{
+				System.out.println(y);
 				if (!Contains(new GroundPiece(1, x, y), pieces))
 				{
 					pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), x, y));
