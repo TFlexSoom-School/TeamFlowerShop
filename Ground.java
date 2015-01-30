@@ -46,18 +46,19 @@ public class Ground {
 			}
 		}
 		
-		for (int x = numX; x < UniversalXPos + Gdx.graphics.getWidth(); x += groundSquareDims)
+		while (numX < UniversalXPos + Gdx.graphics.getWidth())
 		{
-			System.out.println(x);
-			for (int y = numY; y < UniversalYPos + Gdx.graphics.getHeight(); y += groundSquareDims)
+			while (numY < UniversalYPos + Gdx.graphics.getHeight())
 			{
-				System.out.println(y);
-				if (!Contains(new GroundPiece(1, x, y), pieces))
+				if (!Contains(new GroundPiece(1, numX, numY), pieces))
 				{
-					pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), x, y));
-					System.out.println(x + " " + y);
+					pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), numX, numY));
 				}
+				
+				numY += groundSquareDims;
 			}
+			
+			numX += groundSquareDims;
 		}
 		
 		for (GroundPiece gp : pieces)
@@ -71,7 +72,7 @@ public class Ground {
 		for (GroundPiece gp : pieces)
 		{
 			batch.begin();
-			batch.draw(gp.GroundTex, (gp.posX + gp.universalX), (gp.posY + gp.universalY));
+			batch.draw(gp.GroundTex, (gp.posX - gp.universalX), (gp.posY - gp.universalY));
 			batch.end();
 		}
 	}
@@ -81,11 +82,11 @@ public class Ground {
 		boolean result = false;
 		for (int i = 0; i < comparer.size() - 1; i ++)
 		{
-			if (gp.posX == comparer.get(i).posX &&
-				gp.posX == comparer.get(i).posX)
-			{
-				result = true;
-			}
+			if (gp.posX == comparer.get(i).posX)
+				if(gp.posY == comparer.get(i).posY)
+				{
+					result = true;
+				}
 		}
 		return result;
 	}
