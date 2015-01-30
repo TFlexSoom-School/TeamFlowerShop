@@ -20,6 +20,7 @@ public class TLoT extends ApplicationAdapter {
 	TextureRegion img_1;
 	
 	ArrayList<Bullet> bullets;
+	ArrayList<Enemy> enemies;
 	Ground gRenderer;
 	
 	@Override
@@ -29,6 +30,7 @@ public class TLoT extends ApplicationAdapter {
 		img_1 = new TextureRegion(img, 0, 0, img.getWidth(), img.getHeight());
 		
 		bullets = new ArrayList<Bullet>();
+		enemies = new ArrayList<Enemy>();
 		gRenderer = new Ground();
 	}
 
@@ -38,10 +40,12 @@ public class TLoT extends ApplicationAdapter {
 	float speed = 10;
 	int MousePosX, MousePosY;
 	double rotation;
+	
 	int timer = 0;
 	
 	public void Update() {
-		gRenderer.Update(universalXPos, universalYPos);
+		//gRenderer.Update(universalXPos, universalYPos);
+		
 		MousePosX = Gdx.input.getX();
 		MousePosY = Gdx.graphics.getHeight() - Gdx.input.getY();
 		
@@ -56,9 +60,32 @@ public class TLoT extends ApplicationAdapter {
 					(Gdx.graphics.getWidth() / 2), 
 						(Gdx.graphics.getHeight() / 2), rotation, universalXPos, universalYPos));
 		
-		for (Bullet b : bullets){
-			b.Update(universalXPos, universalYPos);
+		if (timer % 200 == 0)
+			enemies.add(new Enemy(universalXPos, universalYPos));
+		
+		for (Enemy e : enemies)
+		{
+			e.Update(universalXPos + (Gdx.graphics.getWidth() / 2), universalYPos + (Gdx.graphics.getHeight() / 2));
 		}
+		
+		for (Bullet b : bullets){
+			b.Update(universalXPos + (Gdx.graphics.getWidth() / 2), 
+					universalYPos + (Gdx.graphics.getHeight() / 2));
+			
+		}
+		
+		for (int i = 0; i < bullets.size() - 1; i++)
+		{
+			for (int j = 0; j < enemies.size(); j++)
+			{
+				if (bullets.get(i).bulletRect.overlaps(enemies.get(j).enemyRect))
+				{
+					bullets.remove(i);
+					enemies.remove(j);
+				}
+			}
+		}
+		
 		
 		if(Gdx.input.isKeyPressed(Keys.W))
 			Move(Keys.W);
@@ -86,11 +113,12 @@ public class TLoT extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//HERE STARTS ALL THE DRAW CODE. ENGINE ONLY HAS ONE LOOP METHOD, AND IT IS RENDER.
-		gRenderer.Draw();
+		//gRenderer.Draw(universalXPos, universalYPos);
 		
 		for (Bullet b : bullets){
 			b.Draw();
 		}
+		
 		
 		batch.begin();
 		batch.draw(img_1, (Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2), 
@@ -99,6 +127,10 @@ public class TLoT extends ApplicationAdapter {
 						(int)Math.toDegrees(rotation) + 90);
 		batch.end();
 		
+		for (Enemy e : enemies)
+		{
+			e.Draw(universalXPos, universalYPos);
+		}
 		timer += 1;
 	}
 	
@@ -106,22 +138,22 @@ public class TLoT extends ApplicationAdapter {
 	{
 		if (key == Keys.W)
 		{
-			universalYPos -= speed;
+			universalYPos += speed;
 			MoveAll(false, -speed);
 		}
 		if (key == Keys.A)
 		{
-			universalXPos += speed;
+			universalXPos -= speed;
 			MoveAll(true, speed);
 		}
 		if (key == Keys.S)
 		{
-			universalYPos += speed;
+			universalYPos -= speed;
 			MoveAll(false, speed);
 		}
 		if (key == Keys.D)
 		{
-			universalXPos -= speed;
+			universalXPos += speed;
 			MoveAll(true, -speed);
 		}
 	}
