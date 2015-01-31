@@ -1,7 +1,5 @@
 package com.TeamFlowerShop.game;
 
-import java.util.*;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -47,12 +45,13 @@ public class Enemy {
 		else
 			enemyY = UniversalYPos + Gdx.graphics.getHeight() + 128;
 		
+		enemyRect = new Rectangle(enemyX, enemyY, enemyTex.getWidth(), enemyTex.getHeight());
 	}
 	
 	public void Update(int playerX, int playerY)
 	{
 		rotation = (float)Math.atan2(playerY - enemyY, 
-				playerX - enemyX);
+				playerX - enemyX);//find angle made between player and enemy and faces enemy to player
 		
 		enemyX += Math.cos(rotation) * 10;
 		enemyY += Math.sin(rotation) * 10;
