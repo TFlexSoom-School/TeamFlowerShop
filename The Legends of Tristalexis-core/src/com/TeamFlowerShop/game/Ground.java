@@ -1,18 +1,10 @@
 package com.TeamFlowerShop.game;
 
-import java.io.*;
+import java.awt.Point;
 import java.util.*;
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.math.*;
 
 public class Ground {
 	SpriteBatch batch;
@@ -29,141 +21,59 @@ public class Ground {
 	int numX, numY;
 	int timer = 0;
 	
-	public void UpdateRender(int UniversalXPos, int UniversalYPos)
+	public Point findClosestXY (int universalX, int universalY)
 	{
-		/*if (timer % 40 == 0)
-		{
-			for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
-				if (i % groundSquareDims == 0)
-				{
-					numX = i;
-					break;
-				}
-			
-			for (int i = UniversalYPos - groundSquareDims; i < UniversalYPos; i++)
-				if (i % groundSquareDims == 0)
-				{
-					numY = i;
-					break;
-				}
-			
-			do
+		for (int i = universalX - groundSquareDims; i < universalX; i++)
+			if (i % groundSquareDims == 0)
 			{
-				do 
-				{
-					if (!Contains(new GroundPiece(1, numX, numY), pieces))
-					{
-						pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), numX, numY));
-					}
-					
-					numY += groundSquareDims;
-				}
-				while (numY < UniversalYPos + Gdx.graphics.getHeight() * 3);
-				
-				numX += groundSquareDims;
+				numX = i;
+				break;
 			}
-			while (numX < UniversalXPos + Gdx.graphics.getWidth() * 3);
-			
-			for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
-				if (i % groundSquareDims == 0)
-				{
-					numX = i;
-					break;
-				}
-			
-			for (int i = UniversalYPos - groundSquareDims; i < UniversalYPos; i++)
-				if (i % groundSquareDims == 0)
-				{
-					numY = i;
-					break;
-				}
-			
-			do
+		for (int i = universalY - groundSquareDims; i < universalY; i++)
+			if (i % groundSquareDims == 0)
 			{
-				do 
-				{
-					if (!Contains(new GroundPiece(1, numX, numY), pieces))
-					{
-						pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), numX, numY));
-					}
-					
-					numX += groundSquareDims;
-				}
-				while (numX < UniversalXPos + Gdx.graphics.getWidth() * 3);
-				
-				numY += groundSquareDims;
+				numY = i;
+				break;
 			}
-			while (numY < UniversalYPos + Gdx.graphics.getHeight() * 3);
-			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			for (int i = UniversalXPos + Gdx.graphics.getWidth() - groundSquareDims; i < UniversalXPos + Gdx.graphics.getWidth() + groundSquareDims; i++)
-				if (i % groundSquareDims == 0)
-				{
-					numX = i;
-					break;
-				}
-			
-			for (int i = UniversalYPos - groundSquareDims; i < UniversalYPos; i++)
-				if (i % groundSquareDims == 0)
-				{
-					numY = i;
-					break;
-				}
-			
-			do
-			{
-				do 
-				{
-					if (!Contains(new GroundPiece(1, numX, numY), pieces))
-					{
-						pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), numX, numY));
-					}
-					
-					numY += groundSquareDims;
-				}
-				while (numY < UniversalYPos + Gdx.graphics.getHeight() * 3);
-				
-				numX -= groundSquareDims;
-			}
-			while (numX > UniversalXPos);
-			
-			for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
-				if (i % groundSquareDims == 0)
-				{
-					numX = i;
-					break;
-				}
-			
-			for (int i = UniversalYPos + Gdx.graphics.getHeight() - groundSquareDims; i < UniversalYPos + Gdx.graphics.getHeight() + groundSquareDims; i++)
-				if (i % groundSquareDims == 0)
-				{
-					numY = i;
-					break;
-				}
-			
-			do
-			{
-				do 
-				{
-					if (!Contains(new GroundPiece(1, numX, numY), pieces))
-					{
-						pieces.add(new GroundPiece((int)Math.round(Math.random() * 4), numX, numY));
-					}
-					
-					numX += groundSquareDims;
-				}
-				while (numX < UniversalXPos + Gdx.graphics.getWidth() * 3);
-				
-				numY -= groundSquareDims;
-			}
-			while (numY > UniversalYPos);
-		}*/
+		return new Point(numX, numY);//returns the closest point whose XY coordinates are both divisible by
+									 //128 off the lower left hand side of the screen
 	}
 	
-	public void Update(int UniversalXPos, int UniversalYPos)
+	public void UpdateRender(int UniversalXPos, int UniversalYPos)
 	{
-		UpdateRender(UniversalXPos, UniversalYPos);
+		numX = findClosestXY(UniversalXPos, UniversalYPos).x;
+		numY = findClosestXY(UniversalXPos, UniversalYPos).y;
 		
-		for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
+		while (numX < UniversalXPos + Gdx.graphics.getWidth())
+		{
+			while (numY < UniversalYPos + Gdx.graphics.getHeight())
+			{
+				if (!Contains(new GroundPiece(1, numX, numY), pieces))
+				{
+					pieces.add(new GroundPiece((int)Math.ceil(Math.random() * 4), numX, numY));
+				}
+				numY += groundSquareDims;
+			}
+			numX += groundSquareDims;
+		}
+		//////////////////////
+		numX = findClosestXY(UniversalXPos, UniversalYPos).x;
+		numY = findClosestXY(UniversalXPos, UniversalYPos).y;
+		
+		while (numY < UniversalYPos + Gdx.graphics.getHeight())
+		{
+			while (numX < UniversalXPos + Gdx.graphics.getWidth())
+			{
+				if (!Contains(new GroundPiece(1, numX, numY), pieces))
+				{
+					pieces.add(new GroundPiece((int)Math.ceil(Math.random() * 4), numX, numY));
+				}
+				numX += groundSquareDims;
+			}
+			numY += groundSquareDims;
+		}
+		/////////////////////////////////////////////////////////////////////////////////
+		for (int i = UniversalXPos + Gdx.graphics.getWidth() + groundSquareDims; i > UniversalXPos + Gdx.graphics.getWidth(); i--)
 			if (i % groundSquareDims == 0)
 			{
 				numX = i;
@@ -175,19 +85,48 @@ public class Ground {
 				numY = i;
 				break;
 			}
-		
-		while (numX < UniversalXPos + Gdx.graphics.getWidth() + groundSquareDims * 4)
+		while (numX > UniversalXPos)
 		{
 			while (numY < UniversalYPos + Gdx.graphics.getHeight())
 			{
 				if (!Contains(new GroundPiece(1, numX, numY), pieces))
 				{
-					pieces.add(new GroundPiece(1, numX, numY));
+					pieces.add(new GroundPiece((int)Math.ceil(Math.random() * 4), numX, numY));
 				}
 				numY += groundSquareDims;
 			}
-			numX += groundSquareDims;
+			numX -= groundSquareDims;
 		}
+		//////////////////////
+		for (int i = UniversalXPos - groundSquareDims; i < UniversalXPos; i++)
+			if (i % groundSquareDims == 0)
+			{
+				numX = i;
+				break;
+			}
+		for (int i = UniversalYPos + Gdx.graphics.getHeight() + groundSquareDims; i > UniversalYPos + Gdx.graphics.getHeight(); i++)
+			if (i % groundSquareDims == 0)
+			{
+				numY = i;
+				break;
+			}
+		while (numY > UniversalYPos)
+		{
+			while (numX < UniversalXPos + Gdx.graphics.getWidth())
+			{
+				if (!Contains(new GroundPiece(1, numX, numY), pieces))
+				{
+					pieces.add(new GroundPiece((int)Math.ceil(Math.random() * 4), numX, numY));
+				}
+				numX += groundSquareDims;
+			}
+			numY -= groundSquareDims;
+		}
+	}
+	
+	public void Update(int UniversalXPos, int UniversalYPos)
+	{
+		UpdateRender(UniversalXPos, UniversalYPos);//updaterender adds pieces if they are on the screen.
 		
 		for (GroundPiece gp : pieces)
 		{
