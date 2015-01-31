@@ -17,7 +17,8 @@ import com.badlogic.gdx.math.*;
 public class TLoT extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
-	TextureRegion img_1;
+	TextureRegion img_1;//draw it as a texture region because it draws a certain region of a sprite
+						//and who knows when we might add animation? :D
 	
 	ArrayList<Bullet> bullets;
 	ArrayList<Enemy> enemies;
@@ -47,46 +48,57 @@ public class TLoT extends ApplicationAdapter {
 		//gRenderer.Update(universalXPos, universalYPos);
 		
 		MousePosX = Gdx.input.getX();
-		MousePosY = Gdx.graphics.getHeight() - Gdx.input.getY();
+		MousePosY = Gdx.graphics.getHeight() - Gdx.input.getY();//have to do this because mouse Y is calculated with Y incrementing as it goes down but
+																//with everything else incrementing from down to up 
 		
 		rotation = Math.atan2(((Gdx.graphics.getHeight() / 2) - MousePosY), 
 					((Gdx.graphics.getWidth() / 2) - MousePosX));
 		
-		velocityX = (float)Math.cos(rotation) * 20;
-		velocityY = (float)Math.sin(rotation) * 20;
+		velocityX = (float)Math.cos(rotation) * 20;//simple trig to find how fast up it should go and how fast to the side
+		velocityY = (float)Math.sin(rotation) * 20;//a search on the trig unit circle should come up with something if you want to know more
 		
 		if (timer % 5 == 0 && Gdx.input.isButtonPressed(Input.Buttons.LEFT))
 			bullets.add(new Bullet(velocityX, velocityY, 
 					(Gdx.graphics.getWidth() / 2), 
 						(Gdx.graphics.getHeight() / 2), rotation, universalXPos, universalYPos));
 		
-		if (timer % 200 == 0)
+		if (timer % 200 == 0)//spawns an enemy every 200 updates NEED TO IMPROVE: random spawning, enemy hardness level, rectangles that are rotated? :3 pls?
 			enemies.add(new Enemy(universalXPos, universalYPos));
 		
 		for (Enemy e : enemies)
-		{
+		{//updates each enemy in the list enemies
 			e.Update(universalXPos + (Gdx.graphics.getWidth() / 2), universalYPos + (Gdx.graphics.getHeight() / 2));
 		}
 		
-		for (Bullet b : bullets){
+		for (Bullet b : bullets)
+		{//updates each bullet in the list of bullets
 			b.Update(universalXPos + (Gdx.graphics.getWidth() / 2), 
 					universalYPos + (Gdx.graphics.getHeight() / 2));
 			
 		}
 		
-		for (int i = 0; i < bullets.size() - 1; i++)
+		//used this instead of size - 1 because then if there was only one instance of the object
+		//the two wouldn't be recognized in the for loop and if it was <= in the for loop then
+		//it crashed because it was out of the size. This checks for collision of bullet and enemy
+		if (bullets.size() != 0)
 		{
-			for (int j = 0; j < enemies.size(); j++)
+			for (int i = 0; i < bullets.size(); i++)
 			{
-				if (bullets.get(i).bulletRect.overlaps(enemies.get(j).enemyRect))
+				if (enemies.size() != 0)
 				{
-					bullets.remove(i);
-					enemies.remove(j);
+					for (int j = 0; j < enemies.size(); j++)
+					{
+						if (bullets.get(i).bulletRect.overlaps(enemies.get(j).enemyRect))
+						{
+							bullets.remove(i);
+							enemies.remove(j);
+						}
+					}
 				}
 			}
 		}
 		
-		
+		//redirects to move method which deals with movement
 		if(Gdx.input.isKeyPressed(Keys.W))
 			Move(Keys.W);
 		if(Gdx.input.isKeyPressed(Keys.S))
@@ -98,9 +110,10 @@ public class TLoT extends ApplicationAdapter {
 		
 		for (int i = 0; i < bullets.size(); i++)
 		{
+			//calculate distance
 			double distance = Math.sqrt(Math.pow((bullets.get(i).posX), 2) + 
 					Math.pow((bullets.get(i).posY), 2));
-			
+			//delete if too far to stop unnecessary mem usage. can change value for different ranges of weapons.
 			if (distance > 2000)
 				bullets.remove(i);
 		}
@@ -115,12 +128,12 @@ public class TLoT extends ApplicationAdapter {
 		//HERE STARTS ALL THE DRAW CODE. ENGINE ONLY HAS ONE LOOP METHOD, AND IT IS RENDER.
 		//gRenderer.Draw(universalXPos, universalYPos);
 		
-		for (Bullet b : bullets){
+		for (Bullet b : bullets){//draws each bullet in the list of bullets
 			b.Draw();
 		}
 		
 		
-		batch.begin();
+		batch.begin();//draw the player
 		batch.draw(img_1, (Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2), 
 				(Gdx.graphics.getHeight() / 2) - (img.getHeight() / 2), img.getWidth() / 2, 
 					img.getHeight() / 2, img.getWidth(), img.getHeight(), 1, 1, 
@@ -128,14 +141,14 @@ public class TLoT extends ApplicationAdapter {
 		batch.end();
 		
 		for (Enemy e : enemies)
-		{
+		{//draws each enemy in the list of enemies
 			e.Draw(universalXPos, universalYPos);
 		}
 		timer += 1;
 	}
 	
 	public void Move (int key)
-	{
+	{//Move() deals with movement
 		if (key == Keys.W)
 		{
 			universalYPos += speed;
@@ -159,7 +172,9 @@ public class TLoT extends ApplicationAdapter {
 	}
 	
 	public void MoveAll (Boolean XY, float distance)
-	{
+	{//XY == true means the X value is being changed. else, y val.
+		// made this because didnt want to put all code for moving bullets in code
+		//for moving the player.
 		if (XY)
 		{
 			for (Bullet b : bullets)
