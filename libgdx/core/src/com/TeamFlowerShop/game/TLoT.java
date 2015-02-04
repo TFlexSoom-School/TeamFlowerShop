@@ -22,6 +22,7 @@ public class TLoT extends ApplicationAdapter {
 	
 	ArrayList<Bullet> bullets;
 	ArrayList<Enemy> enemies;
+	ArrayList<Blocks> blocks;
 	Ground gRenderer;
 	
 	@Override
@@ -32,6 +33,7 @@ public class TLoT extends ApplicationAdapter {
 		
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<Enemy>();
+		blocks = new ArrayList<Blocks>();
 		gRenderer = new Ground();
 	}
 
@@ -44,7 +46,17 @@ public class TLoT extends ApplicationAdapter {
 	
 	int timer = 0;
 	
+	boolean lastFrameRMD = false;
+	boolean thisFrameRMD = false;
+	
+	float boxX = 0, boxY = 0;
+	float boxW = 0, boxH = 0;
+	
 	public void Update() {
+		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
+			thisFrameRMD = true;
+		else
+			thisFrameRMD = false;
 		gRenderer.Update(universalXPos, universalYPos);
 		
 		MousePosX = Gdx.input.getX();
@@ -89,11 +101,11 @@ public class TLoT extends ApplicationAdapter {
 					for (int j = 0; j < enemies.size(); j++)
 					{
 						if (bullets.get(i).bulletRect.overlaps(enemies.get(j).enemyRect))
-						{
-							bullets.remove(i);
+						{///////////////////////////////////////fix broken collision code
+							/*bullets.remove(i);
 							enemies.remove(j);
 							i--;
-							j--;
+							j--;*/
 						}
 					}
 				}
@@ -119,6 +131,34 @@ public class TLoT extends ApplicationAdapter {
 			if (distance > 2000)
 				bullets.remove(i);
 		}
+		
+		if (!lastFrameRMD && thisFrameRMD)
+		{
+			boxX = Gdx.input.getX();
+			boxY = Gdx.input.getY();
+		}
+		if (lastFrameRMD && !thisFrameRMD)
+		{
+			boxW = Gdx.input.getX() - boxX;
+			boxH = Gdx.input.getY() - boxY;
+		}
+		if (boxX != 0 && boxY != 0 && boxW != 0 && boxH != 0)
+		{
+			/*if (boxW < 0)
+				boxX -= boxW;
+			if (boxH < 0)
+				boxY -= boxH;*/
+			blocks.add(new Blocks((boxX) + universalXPos, (Gdx.graphics.getHeight() - boxY) + universalYPos, boxW, boxH, universalXPos, universalYPos));
+			boxX = 0;
+			boxY = 0;
+			boxW = 0;
+			boxH = 0;
+		}
+		
+		lastFrameRMD = thisFrameRMD;
+		
+		for (Blocks b : blocks)
+			b.Update(universalXPos, universalYPos);
 	}
 	
 	@Override
@@ -146,6 +186,10 @@ public class TLoT extends ApplicationAdapter {
 		{//draws each enemy in the list of enemies
 			e.Draw(universalXPos, universalYPos);
 		}
+		
+		for (Blocks b : blocks)
+			b.Draw();
+		
 		timer += 1;
 	}
 	
