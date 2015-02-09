@@ -43,6 +43,11 @@ public class Bullet {
 		posY -= velocityY;
 	}
 	
+	public void DisposeBullet()
+	{
+		bulletTex.dispose();
+	}
+	
 	public void Draw(){
 		batch.begin();
 		batch.draw(bulletTexReg, posX, posY, bulletTex.getWidth() / 2, bulletTex.getHeight() / 2, bulletTex.getWidth(), 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 
 public class GroundPiece {
-	Texture GroundTex;
+	int GroundTex;
 	float posX, posY;
 	float universalX = 0, universalY = 0;
 	
@@ -19,15 +19,7 @@ public class GroundPiece {
 		}
 		
 		//here is just a 'piece' of ground used by Ground class to keep track of pieces
-		if (groundType == 1)
-			GroundTex = new Texture("gsquare1.png");
-		else if (groundType == 2)
-			GroundTex = new Texture("gsquare2.png");
-		else if (groundType == 3)
-			GroundTex = new Texture("gsquare3.png");
-		else if (groundType == 4)
-			GroundTex = new Texture("gsquare4.png");
-		
+		GroundTex = groundType;
 	}
 	
 	public void Update(int U_X, int U_Y)

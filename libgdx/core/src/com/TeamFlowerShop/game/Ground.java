@@ -9,12 +9,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Ground {
 	SpriteBatch batch;
 	ArrayList<GroundPiece> pieces;
+	Texture[] ground;
 	
 	public Ground()
 	{
 		batch = new SpriteBatch();
 		pieces = new ArrayList<GroundPiece>();
 		
+		ground = new Texture[] {new Texture("gsquare1.png"), new Texture("gsquare2.png"), 
+			new Texture("gsquare3.png"), new Texture("gsquare4.png")};
 	}
 	
 	int groundSquareDims = new Texture("gsquare1.png").getHeight();
@@ -74,7 +77,7 @@ public class Ground {
 		for (GroundPiece gp : pieces)
 		{
 			batch.begin();
-			batch.draw(gp.GroundTex, (gp.posX - gp.universalX), (gp.posY - gp.universalY));
+			batch.draw(ground[gp.GroundTex - 1], (gp.posX - gp.universalX), (gp.posY - gp.universalY));
 			batch.end();
 		}
 	}

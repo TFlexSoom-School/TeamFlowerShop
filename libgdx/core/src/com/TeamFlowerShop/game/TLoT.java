@@ -129,7 +129,10 @@ public class TLoT extends ApplicationAdapter {
 					Math.pow((bullets.get(i).posY), 2));
 			//delete if too far to stop unnecessary mem usage. can change value for different ranges of weapons.
 			if (distance > 2000)
+			{
+				bullets.get(i).DisposeBullet();
 				bullets.remove(i);
+			}
 		}
 		
 		if (!lastFrameRMD && thisFrameRMD)
