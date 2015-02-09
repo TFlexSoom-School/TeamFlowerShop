@@ -1,8 +1,5 @@
 package com.TeamFlowerShop.game;
 
-import com.badlogic.gdx.graphics.Texture;
-
-
 public class GroundPiece {
 	int GroundTex;
 	float posX, posY;

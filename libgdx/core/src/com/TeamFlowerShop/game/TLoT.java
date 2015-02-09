@@ -101,10 +101,11 @@ public class TLoT extends ApplicationAdapter {
 					{
 						if (bullets.get(i).bulletRect.overlaps(enemies.get(j).enemyRect))
 						{///////////////////////////////////////fix broken collision code
-							/*bullets.remove(i);
+							bullets.remove(i);
 							enemies.remove(j);
 							i--;
-							j--;*/
+							j--;
+							break; // This just fixes this.
 						}
 					}
 				}
