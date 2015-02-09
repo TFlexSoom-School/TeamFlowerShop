@@ -2,13 +2,6 @@ package com.TeamFlowerShop.game;
 
 import java.awt.Point;
 import java.util.*;
-
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.math.*;
 
 public class RotatedRectangle {

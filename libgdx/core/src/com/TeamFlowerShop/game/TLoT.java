@@ -9,9 +9,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.math.*;
 
 public class TLoT extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -36,6 +33,9 @@ public class TLoT extends ApplicationAdapter {
 		gRenderer = new Ground();
 	}
 
+	public enum MoveDirection {
+		LEFT, RIGHT, UP, DOWN
+	}
 	
 	int universalXPos = 0, universalYPos = 0;
 	float velocityX, velocityY;
@@ -112,14 +112,15 @@ public class TLoT extends ApplicationAdapter {
 		}
 		
 		//redirects to move method which deals with movement
-		if(Gdx.input.isKeyPressed(Keys.W))
-			Move(Keys.W);
-		if(Gdx.input.isKeyPressed(Keys.S))
-			Move(Keys.S);
-		if(Gdx.input.isKeyPressed(Keys.A))
-			Move(Keys.A);
-		if(Gdx.input.isKeyPressed(Keys.D))
-			Move(Keys.D);
+		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
+			Move(MoveDirection.UP);
+		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN))
+			Move(MoveDirection.DOWN);
+		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
+			Move(MoveDirection.LEFT);
+		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
+			Move(MoveDirection.RIGHT);
+
 		
 		for (int i = 0; i < bullets.size(); i++)
 		{
@@ -153,7 +154,7 @@ public class TLoT extends ApplicationAdapter {
 			boxW = 0;
 			boxH = 0;
 		}
-		
+
 		lastFrameRMD = thisFrameRMD;
 		
 		for (Blocks b : blocks)
@@ -192,24 +193,24 @@ public class TLoT extends ApplicationAdapter {
 		timer += 1;
 	}
 	
-	public void Move (int key)
+	public void Move (MoveDirection d)
 	{//Move() deals with movement
-		if (key == Keys.W)
+		if (d == MoveDirection.UP)
 		{
 			universalYPos += speed;
 			MoveAll(false, -speed);
 		}
-		if (key == Keys.A)
+		if (d == MoveDirection.LEFT)
 		{
 			universalXPos -= speed;
 			MoveAll(true, speed);
 		}
-		if (key == Keys.S)
+		if (d == MoveDirection.DOWN)
 		{
 			universalYPos -= speed;
 			MoveAll(false, speed);
 		}
-		if (key == Keys.D)
+		if (d == MoveDirection.RIGHT)
 		{
 			universalXPos += speed;
 			MoveAll(true, -speed);
