@@ -12,6 +12,7 @@ public class Blocks {
 	TextureRegion blockReg;
 	float posX, posY;
 	float universalX, universalY;
+	RotatedRectangle blockCollRect;
 	
 	public Blocks (float PosX, float PosY, float Width, float Height, float U_X, float U_Y)
 	{
@@ -30,6 +31,7 @@ public class Blocks {
 	public void Update(float UniversalX, float UniversalY)
 	{
 		rotation = Math.atan2(blockRect.width, blockRect.height);
+		blockCollRect = new RotatedRectangle(posX, posY, blockRect.width, blockRect.height, (float)rotation);
 		universalX = UniversalX;
 		universalY = UniversalY;
 	}

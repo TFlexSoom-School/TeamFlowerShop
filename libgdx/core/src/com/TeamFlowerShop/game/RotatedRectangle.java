@@ -26,8 +26,6 @@ public class RotatedRectangle {
 	
 	Point P_A, P_B, P_C, P_D;
 	ArrayList<Point> rectPoints;
-	ArrayList<Integer> rectPointsX;
-	ArrayList<Integer> rectPointsY;
 	float X, Y;
 	float Rotation;
 	float Width, Height;

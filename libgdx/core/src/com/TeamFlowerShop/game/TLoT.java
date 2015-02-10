@@ -78,7 +78,7 @@ public class TLoT extends ApplicationAdapter {
 		
 		for (Enemy e : enemies)
 		{//updates each enemy in the list enemies
-			e.Update(universalXPos + (Gdx.graphics.getWidth() / 2), universalYPos + (Gdx.graphics.getHeight() / 2));
+			e.Update(universalXPos + (Gdx.graphics.getWidth() / 2), universalYPos + (Gdx.graphics.getHeight() / 2), blocks);
 		}
 		
 		for (Bullet b : bullets)
