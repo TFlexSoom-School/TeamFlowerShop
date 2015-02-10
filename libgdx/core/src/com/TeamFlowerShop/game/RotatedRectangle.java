@@ -1,11 +1,10 @@
 package com.TeamFlowerShop.game;
 
-import java.awt.Point;
 import java.util.*;
+
 import com.badlogic.gdx.math.*;
 
 public class RotatedRectangle {
-	
 	public class LinearEquation
 	{
 		float slope = 0;
@@ -13,7 +12,10 @@ public class RotatedRectangle {
 		
 		public LinearEquation (Point p1, Point p2)
 		{
-			slope = (p1.y - p2.y) / (p1.x - p2.x);
+			if (p1.x - p2.x != 0)
+				slope = (p1.y - p2.y) / (p1.x - p2.x);
+			else
+				slope = 100000;
 			
 			yint = p1.y - (slope * p1.x);
 		}
@@ -29,16 +31,20 @@ public class RotatedRectangle {
 	float X, Y;
 	float Rotation;
 	float Width, Height;
+	float xHeight, yHeight;
 
 	LinearEquation f1, f2, f3, f4;
 	
 	public RotatedRectangle(float x, float y, float width, float height, float rotation)//origin at center of rectangle automatically
 	//because im too lazy
 	{
-		P_A = new Point((int)((Math.cos(rotation) + x) * width) + 10, (int)((Math.sin(rotation) + y) * height) + 10);
-		P_B = new Point(-(int)((Math.cos(rotation) + x) * width) + 10, -(int)((Math.sin(rotation) + y) * height) + 10);
-		P_C = new Point(-(int)((Math.cos(rotation) + x) * width) - 10, -(int)((Math.sin(rotation) + y) * height) - 10);
-		P_D = new Point((int)((Math.cos(rotation) + x) * width) - 10, (int)((Math.sin(rotation) + y) * height) - 10);
+		xHeight = (float)Math.cos(rotation + Math.toRadians(90)) * height;
+		yHeight = (float)Math.sin(rotation + Math.toRadians(90)) * height;
+		
+		P_A = new Point((int)((Math.cos(rotation) + x) * width) + xHeight, (int)((Math.sin(rotation) + y) * width) + yHeight);
+		P_B = new Point(-(int)((Math.cos(rotation) + x) * width) + xHeight, -(int)((Math.sin(rotation) + y) * width) + yHeight);
+		P_C = new Point(-(int)((Math.cos(rotation) + x) * width) + xHeight, -(int)((Math.sin(rotation) + y) * width) + yHeight);
+		P_D = new Point((int)((Math.cos(rotation) + x) * width) + xHeight, (int)((Math.sin(rotation) + y) * width) + yHeight);
 		
 		X = x;
 		Y = y;
@@ -54,10 +60,15 @@ public class RotatedRectangle {
 	
 	public void Update()
 	{
-		P_A = new Point((int)((Math.cos(Rotation) + X) * Width) + 10, (int)((Math.sin(Rotation) + Y) * Height) + 10);
-		P_B = new Point(-(int)((Math.cos(Rotation) + X) * Width) + 10, -(int)((Math.sin(Rotation) + Y) * Height) + 10);
-		P_C = new Point(-(int)((Math.cos(Rotation) + X) * Width) - 10, -(int)((Math.sin(Rotation) + Y) * Height) - 10);
-		P_D = new Point((int)((Math.cos(Rotation) + X) * Width) - 10, (int)((Math.sin(Rotation) + Y) * Height) - 10);
+		P_A = new Point((int)((Math.cos(Rotation) + X) * Width) + xHeight, (int)((Math.sin(Rotation) + Y) * Width) + yHeight);
+		P_B = new Point(-(int)((Math.cos(Rotation) + X) * Width) + xHeight, -(int)((Math.sin(Rotation) + Y) * Width) + yHeight);
+		P_C = new Point(-(int)((Math.cos(Rotation) + X) * Width) - xHeight, -(int)((Math.sin(Rotation) + Y) * Width) - yHeight);
+		P_D = new Point((int)((Math.cos(Rotation) + X) * Width) - xHeight, (int)((Math.sin(Rotation) + Y) * Width) - yHeight);
+		
+		P_A = new Point(-5, 5);
+		P_B = new Point(5, 5);
+		P_C = new Point(5, -5);
+		P_D = new Point(-5, -5);
 		
 		f1 = new LinearEquation(P_A, P_B);
 		f2 = new LinearEquation(P_B, P_C);
@@ -75,6 +86,7 @@ public class RotatedRectangle {
 			(f2.f(p.x) < p.y && f4.f(p.x) > p.y)))
 		{
 			result = true;
+			System.out.println("true");
 		}
 		
 		return result;

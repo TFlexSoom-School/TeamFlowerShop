@@ -1,8 +1,6 @@
 package com.TeamFlowerShop.game;
 
-import java.awt.Point;
 import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -55,12 +53,12 @@ public class Enemy {
 		rotation = (float)Math.atan2(playerY - enemyY, 
 				playerX - enemyX);//find angle made between player and enemy and faces enemy to player
 		
-		for (Blocks b : blockCollisionCheck)
-		{
-			if (!b.blockCollRect.Contains(new Point((int)(enemyX + Math.cos(rotation) * 10), (int)enemyY)))
+		//for (Blocks b : blockCollisionCheck)
+		{//if/else outside of for for if(b.size != 0)
+			//if (!b.blockCollRect.Contains(new Point((float)(enemyX + Math.cos(rotation) * 10), enemyY)))
 				enemyX += Math.cos(rotation) * 10;
-			if (!b.blockCollRect.Contains(new Point((int)enemyX, (int)(enemyY+ Math.cos(rotation) * 10))))
-					enemyY += Math.sin(rotation) * 10;
+			//if (!b.blockCollRect.Contains(new Point(enemyX, (float)(enemyY+ Math.cos(rotation) * 10))))
+				enemyY += Math.sin(rotation) * 10;
 		}
 	}
 	

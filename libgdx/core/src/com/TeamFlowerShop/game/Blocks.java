@@ -31,7 +31,7 @@ public class Blocks {
 	public void Update(float UniversalX, float UniversalY)
 	{
 		rotation = Math.atan2(blockRect.width, blockRect.height);
-		blockCollRect = new RotatedRectangle(posX, posY, blockRect.width, blockRect.height, (float)rotation);
+		blockCollRect = new RotatedRectangle(posX + UniversalX, posY + UniversalY, blockRect.width, blockRect.height, (float)rotation);
 		universalX = UniversalX;
 		universalY = UniversalY;
 	}
