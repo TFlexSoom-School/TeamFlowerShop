@@ -1,7 +1,6 @@
 package com.TeamFlowerShop.game;
 
 import java.util.ArrayList;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
@@ -11,14 +10,13 @@ public class HUD {
 	SpriteBatch batch;
 	Texture HealthBar;
 	float rotation = 0;
-	
-	float BarX, BarY;
+	float barX, barY;
 	double universalXPos, universalYPos;
 	
 	Rectangle BarRect;
 	
 	boolean X, Y;
-	public HUD(int Health, int Gold, ArrayList<Enemy>, Arraylist<ItemNumbers>)
+	public HUD(int health, int gold, ArrayList<Enemy> enemyList)
 	{
 		batch = new SpriteBatch();
 			
@@ -32,11 +30,11 @@ public class HUD {
 	
 	public void Draw(int ux, int uy)
 	{
-		BarRect = new Rectangle(BarX - ux, BarY - uy, 
+		BarRect = new Rectangle(barX - ux, barY - uy, 
 				HealthBar.getWidth(), HealthBar.getHeight());
 		
 		batch.begin();
-		batch.draw(HealthBar, (float)BarX - ux, (float)BarY - uy, HealthBar.getWidth() / 2, 
+		batch.draw(HealthBar, (float)barX - ux, (float)barY - uy, HealthBar.getWidth() / 2, 
 				HealthBar.getHeight() / 2, HealthBar.getWidth(), HealthBar.getHeight());
 		batch.end();
 	}
