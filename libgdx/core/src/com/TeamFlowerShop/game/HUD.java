@@ -16,7 +16,7 @@ public class HUD {
 	Rectangle BarRect;
 	
 	boolean X, Y;
-	public HUD(int health, int gold, ArrayList<Enemy> enemyList)
+	public HUD(int health, int gold, ArrayList<Enemy> enemies)
 	{
 		batch = new SpriteBatch();
 			
@@ -30,12 +30,10 @@ public class HUD {
 	
 	public void Draw(int ux, int uy)
 	{
-		BarRect = new Rectangle(barX - ux, barY - uy, 
-				HealthBar.getWidth(), HealthBar.getHeight());
+		BarRect = new Rectangle(ux, uy, HealthBar.getWidth(), HealthBar.getHeight());
 		
 		batch.begin();
-		batch.draw(HealthBar, (float)barX - ux, (float)barY - uy, HealthBar.getWidth() / 2, 
-				HealthBar.getHeight() / 2, HealthBar.getWidth(), HealthBar.getHeight());
+		batch.draw(HealthBar, (float) ux, (float) uy);
 		batch.end();
 	}
 }

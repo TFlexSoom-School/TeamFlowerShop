@@ -20,6 +20,7 @@ public class TLoT extends ApplicationAdapter {
 	ArrayList<Enemy> enemies;
 	ArrayList<Blocks> blocks;
 	Ground gRenderer;
+	HUD hud;
 	
 	@Override
 	public void create () {
@@ -31,6 +32,7 @@ public class TLoT extends ApplicationAdapter {
 		enemies = new ArrayList<Enemy>();
 		blocks = new ArrayList<Blocks>();
 		gRenderer = new Ground();
+		hud = new HUD(256, 0, enemies);
 	}
 
 	public enum MoveDirection {
@@ -193,6 +195,8 @@ public class TLoT extends ApplicationAdapter {
 		
 		for (Blocks b : blocks)
 			b.Draw();
+		
+		hud.Draw(0, 0);
 		
 		timer += 1;
 	}
