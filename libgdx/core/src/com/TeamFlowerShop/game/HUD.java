@@ -17,6 +17,8 @@ public class HUD {
 	
 	boolean X, Y;
 	public HUD(int health, int gold, ArrayList<Enemy> enemies)
+	// Will potentially hold all of the Heads up display information including: Gold, Items, Player health,
+	// and any other necessities.
 	{
 		batch = new SpriteBatch();
 			
