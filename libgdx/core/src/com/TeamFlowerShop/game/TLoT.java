@@ -21,6 +21,7 @@ public class TLoT extends ApplicationAdapter {
 	ArrayList<Blocks> blocks;
 	ArrayList<Wall> walls;
 	Ground gRenderer;
+	HUD hud;
 	
 	@Override
 	public void create () {
@@ -33,6 +34,7 @@ public class TLoT extends ApplicationAdapter {
 		blocks = new ArrayList<Blocks>();
 		walls = new ArrayList<Wall>();
 		gRenderer = new Ground();
+		hud = new HUD(0, enemies);
 	}
 
 	public enum MoveDirection {
@@ -53,6 +55,8 @@ public class TLoT extends ApplicationAdapter {
 	float boxX = 0, boxY = 0;
 	float boxW = 0, boxH = 0;
 	
+	int health = 256;
+	
 	// Initialization function to be run once at the beginning of game
 	// I will be using it to spawn walls
 	public void Initialize() {
@@ -62,19 +66,20 @@ public class TLoT extends ApplicationAdapter {
 		{
 			walls.add(new Wall(a, 0));			
 		}
-		
+			
 	}
-	
+		
 	boolean init = true;
+
 	
 	public void Update() {
 		
 		// Code to make the initialization run once
-		if(init)
-		{
-			Initialize();
-			init = !init;
-		}
+			if(init)
+			{
+				Initialize();
+				init = !init;
+			}
 		
 		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
 			thisFrameRMD = true;
@@ -110,6 +115,11 @@ public class TLoT extends ApplicationAdapter {
 			b.Update(universalXPos + (Gdx.graphics.getWidth() / 2), 
 					universalYPos + (Gdx.graphics.getHeight() / 2));
 			
+		}
+		
+		for (Wall w : walls)
+		{
+			w.Update();
 		}
 		
 		//used this instead of size - 1 because then if there was only one instance of the object
@@ -187,8 +197,6 @@ public class TLoT extends ApplicationAdapter {
 		
 		for (Blocks b : blocks)
 			b.Update(universalXPos, universalYPos);
-		
-		
 	}
 	
 	@Override
@@ -220,9 +228,12 @@ public class TLoT extends ApplicationAdapter {
 		for (Blocks b : blocks)
 			b.Draw();
 		
-		for (Wall wall : walls)
+		hud.Draw(0, 0);
+		// draws HUD class
+		
+		for (Wall w : walls)
 		{
-			wall.Draw(universalXPos, universalYPos);
+			w.Draw(universalXPos, universalYPos);
 		}
 		
 		timer += 1;
@@ -271,4 +282,5 @@ public class TLoT extends ApplicationAdapter {
 			}
 		}
 	}
+//>>>>>>> branch 'master' of https://github.com/TFlexSoom/TeamFlowerShop.git
 }
