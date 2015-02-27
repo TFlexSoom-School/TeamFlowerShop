@@ -8,34 +8,52 @@ import com.badlogic.gdx.math.*;
 public class HUD {
 	
 	SpriteBatch batch;
-	Texture HealthBar;
+	Texture healthBar;
 	float rotation = 0;
 	float barX, barY;
 	double universalXPos, universalYPos;
+	int attackedFor = 0;
+	float drawnHealthRemaining;
+	int healthRemaining = 256;
+	int healthLeached = 0;
 	
 	Rectangle BarRect;
 	
 	boolean X, Y;
-	public HUD(int health, int gold, ArrayList<Enemy> enemies)
+	public HUD(int gold, ArrayList<Enemy> enemies)
 	// Will potentially hold all of the Heads up display information including: Gold, Items, Player health,
 	// and any other necessities.
 	{
 		batch = new SpriteBatch();
 			
-		HealthBar = new Texture("Health Bar.png");
+		healthBar = new Texture("Health Bar.png");
+		
+		drawnHealthRemaining = healthBar.getWidth();
 	}
 	
-	public void Update(int Health, int Gold, ArrayList<Enemy> Enemies)
+	public void Update(int gold, ArrayList<Enemy> Enemies, boolean attacked)
 	{
-		
+		while (attacked)
+		{
+			if (attackedFor >= 120)
+			{
+				attackedFor = 0;
+				healthLeached = healthLeached +4;
+				healthRemaining = 256 - healthLeached;
+			//	healthRemaining
+			// 
+			}
+			else
+			{
+			attackedFor = attackedFor + 1;	
+			}
+		}
 	}
 	
-	public void Draw(int ux, int uy)
-	{
-		BarRect = new Rectangle(ux, uy, HealthBar.getWidth(), HealthBar.getHeight());
-		
+	public void Draw(float ux, float uy)
+	{	
 		batch.begin();
-		batch.draw(HealthBar, (float) ux, (float) uy);
+		batch.draw(healthBar, (float) ux, (float) uy, healthRemaining, healthBar.getHeight());
 		batch.end();
 	}
 }

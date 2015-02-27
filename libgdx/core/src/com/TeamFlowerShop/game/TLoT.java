@@ -32,7 +32,7 @@ public class TLoT extends ApplicationAdapter {
 		enemies = new ArrayList<Enemy>();
 		blocks = new ArrayList<Blocks>();
 		gRenderer = new Ground();
-		hud = new HUD(256, 0, enemies);
+		hud = new HUD(0, enemies);
 	}
 
 	public enum MoveDirection {
@@ -52,6 +52,8 @@ public class TLoT extends ApplicationAdapter {
 	
 	float boxX = 0, boxY = 0;
 	float boxW = 0, boxH = 0;
+	
+	int health = 256;
 	
 	public void Update() {
 		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
@@ -197,6 +199,7 @@ public class TLoT extends ApplicationAdapter {
 			b.Draw();
 		
 		hud.Draw(0, 0);
+		// draws HUD class
 		
 		timer += 1;
 	}
