@@ -19,6 +19,7 @@ public class TLoT extends ApplicationAdapter {
 	ArrayList<Bullet> bullets;
 	ArrayList<Enemy> enemies;
 	ArrayList<Blocks> blocks;
+	ArrayList<Wall> walls;
 	Ground gRenderer;
 	
 	@Override
@@ -30,6 +31,7 @@ public class TLoT extends ApplicationAdapter {
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<Enemy>();
 		blocks = new ArrayList<Blocks>();
+		walls = new ArrayList<Wall>();
 		gRenderer = new Ground();
 	}
 
@@ -51,7 +53,29 @@ public class TLoT extends ApplicationAdapter {
 	float boxX = 0, boxY = 0;
 	float boxW = 0, boxH = 0;
 	
+	// Initialization function to be run once at the beginning of game
+	// I will be using it to spawn walls
+	public void Initialize() {
+		
+		// Draw walls
+		for (int a = 0; a < 320; a += 64)
+		{
+			walls.add(new Wall(a, 0));			
+		}
+		
+	}
+	
+	boolean init = true;
+	
 	public void Update() {
+		
+		// Code to make the initialization run once
+		if(init)
+		{
+			Initialize();
+			init = !init;
+		}
+		
 		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
 			thisFrameRMD = true;
 		else
@@ -163,6 +187,8 @@ public class TLoT extends ApplicationAdapter {
 		
 		for (Blocks b : blocks)
 			b.Update(universalXPos, universalYPos);
+		
+		
 	}
 	
 	@Override
@@ -193,6 +219,11 @@ public class TLoT extends ApplicationAdapter {
 		
 		for (Blocks b : blocks)
 			b.Draw();
+		
+		for (Wall wall : walls)
+		{
+			wall.Draw(universalXPos, universalYPos);
+		}
 		
 		timer += 1;
 	}
