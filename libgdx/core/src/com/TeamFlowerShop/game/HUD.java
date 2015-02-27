@@ -48,6 +48,10 @@ public class HUD {
 			attackedFor = attackedFor + 1;	
 			}
 		}
+		if (attacked = false)
+		{
+			attackedFor = 0;
+		}
 	}
 	
 	public void Draw(float ux, float uy)
