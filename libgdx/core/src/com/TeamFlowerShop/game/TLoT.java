@@ -1,6 +1,7 @@
 package com.TeamFlowerShop.game;
 
 import java.util.*;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
 public class TLoT extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -137,11 +139,27 @@ public class TLoT extends ApplicationAdapter {
 						{///////////////////////////////////////fix broken collision code
 							bullets.remove(i);
 							enemies.remove(j);
-							i--;
-							j--;
 							break; // This just fixes this.
 						}
 					}
+				}
+			}
+		}
+		
+		int playerX = (Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2);
+		int playerY = (Gdx.graphics.getHeight() / 2) - (img.getHeight() / 2);
+		
+		if(enemies.size() != 0)
+		{
+			for (int i = 0; i < enemies.size(); i++)
+			{
+				if(enemies.get(i).enemyRect.overlaps(new Rectangle((playerX-25), (playerY-25), (img.getWidth()+50), (img.getHeight()+50))))
+				{
+					enemies.get(i).collision = true;
+				}
+				else
+				{
+					enemies.get(i).collision = false;
 				}
 			}
 		}
@@ -212,12 +230,13 @@ public class TLoT extends ApplicationAdapter {
 			b.Draw();
 		}
 		
+		float playerX = (Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2);
+		float playerY = (Gdx.graphics.getHeight() / 2) - (img.getHeight() / 2);
+		float originX = img.getWidth() / 2;
+		float originY = img.getHeight() / 2;
 		
 		batch.begin();//draw the player
-		batch.draw(img_1, (Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2), 
-				(Gdx.graphics.getHeight() / 2) - (img.getHeight() / 2), img.getWidth() / 2, 
-					img.getHeight() / 2, img.getWidth(), img.getHeight(), 1, 1, 
-						(int)Math.toDegrees(rotation) + 90);
+		batch.draw(img_1, playerX, playerY, originX, originY, img.getWidth(), img.getHeight(), 1, 1, (int)Math.toDegrees(rotation) + 90);
 		batch.end();
 		
 		for (Enemy e : enemies)

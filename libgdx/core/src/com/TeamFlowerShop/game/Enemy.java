@@ -15,6 +15,7 @@ public class Enemy {
 	
 	float enemyX, enemyY;
 	double universalXPos, universalYPos;
+	boolean collision = false;
 	
 	Rectangle enemyRect;
 	
@@ -50,15 +51,18 @@ public class Enemy {
 	
 	public void Update(int playerX, int playerY, ArrayList<Blocks> blockCollisionCheck)
 	{
-		rotation = (float)Math.atan2(playerY - enemyY, 
-				playerX - enemyX);//find angle made between player and enemy and faces enemy to player
-		
-		//for (Blocks b : blockCollisionCheck)
-		{//if/else outside of for for if(b.size != 0)
-			//if (!b.blockCollRect.Contains(new Point((float)(enemyX + Math.cos(rotation) * 10), enemyY)))
-				enemyX += Math.cos(rotation) * 10;
-			//if (!b.blockCollRect.Contains(new Point(enemyX, (float)(enemyY+ Math.cos(rotation) * 10))))
-				enemyY += Math.sin(rotation) * 10;
+		if(!collision)
+		{
+			rotation = (float)Math.atan2(playerY - enemyY, 
+					playerX - enemyX);//find angle made between player and enemy and faces enemy to player
+			
+			//for (Blocks b : blockCollisionCheck)
+			{//if/else outside of for for if(b.size != 0)
+				//if (!b.blockCollRect.Contains(new Point((float)(enemyX + Math.cos(rotation) * 10), enemyY)))
+					enemyX += Math.cos(rotation) * 10;
+				//if (!b.blockCollRect.Contains(new Point(enemyX, (float)(enemyY+ Math.cos(rotation) * 10))))
+					enemyY += Math.sin(rotation) * 10;
+			}
 		}
 	}
 	
