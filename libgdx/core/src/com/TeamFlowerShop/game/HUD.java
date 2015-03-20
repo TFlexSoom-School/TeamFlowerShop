@@ -12,7 +12,6 @@ public class HUD {
 	float rotation = 0;
 	float barX, barY;
 	double universalXPos, universalYPos;
-	int attackedFor = 0;
 	float drawnHealthRemaining;
 	int healthRemaining = 256;
 	int healthLeached = 0;
@@ -33,24 +32,12 @@ public class HUD {
 	
 	public void Update(int gold, ArrayList<Enemy> Enemies, boolean attacked)
 	{
-		while (attacked)
+		if (attacked)
 		{
-			if (attackedFor >= 120)
-			{
-				attackedFor = 0;
-				healthLeached = healthLeached +4;
-				healthRemaining = 256 - healthLeached;
-			//	healthRemaining
-			// 
-			}
-			else
-			{
-			attackedFor = attackedFor + 1;	
-			}
+			healthRemaining -= 32;
 		}
-		if (attacked = false)
+		else
 		{
-			attackedFor = 0;
 		}
 	}
 	
@@ -58,6 +45,7 @@ public class HUD {
 	{	
 		batch.begin();
 		batch.draw(healthBar, (float) ux, (float) uy, healthRemaining, healthBar.getHeight());
+		
 		batch.end();
 	}
 }

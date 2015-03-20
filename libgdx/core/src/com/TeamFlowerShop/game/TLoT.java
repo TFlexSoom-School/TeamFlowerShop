@@ -1,6 +1,7 @@
 package com.TeamFlowerShop.game;
 
 import java.util.*;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -9,13 +10,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
 public class TLoT extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	TextureRegion img_1;//draw it as a texture region because it draws a certain region of a sprite
 						//and who knows when we might add animation? :D
-	
+	Rectangle playerRect;
 	ArrayList<Bullet> bullets;
 	ArrayList<Enemy> enemies;
 	ArrayList<Blocks> blocks;
@@ -76,6 +78,8 @@ public class TLoT extends ApplicationAdapter {
 	
 	// Update function to run every update. This is called in the render function
 	public void Update() {
+		playerRect = new Rectangle((Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2), 
+				(Gdx.graphics.getHeight() / 2) - (img.getHeight() / 2), img.getWidth(), img.getHeight());
 		
 		// Code to make the initialization run once
 		if(init)
@@ -160,11 +164,26 @@ public class TLoT extends ApplicationAdapter {
 						{///////////////////////////////////////fix broken collision code
 							bullets.remove(i);
 							enemies.remove(j);
-							i--;
-							j--;
 							break; // This just fixes this.
 						}
 					}
+				}
+			}
+		}
+		
+		if(enemies.size() != 0)
+		{
+			for (int i = 0; i < enemies.size(); i++)
+			{
+				if(enemies.get(i).enemyRect.overlaps(playerRect))
+				{
+					hud.Update(0, enemies, true);
+					enemies.remove(i);
+					break;
+				}
+				else
+				{
+					hud.Update(0, enemies, false);
 				}
 			}
 		}
@@ -244,12 +263,17 @@ public class TLoT extends ApplicationAdapter {
 			b.Draw();
 		}
 		
+//<<<<<<< HEAD
 		// THIS SHOULD BE MOVED TO THE PLAYER CLASS
+//=======
+		float playerX = (Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2);
+		float playerY = (Gdx.graphics.getHeight() / 2) - (img.getHeight() / 2);
+		float originX = img.getWidth() / 2;
+		float originY = img.getHeight() / 2;
+		
+//>>>>>>> branch 'master' of https://github.com/TFlexSoom/TeamFlowerShop.git
 		batch.begin();//draw the player
-		batch.draw(img_1, (Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2), 
-				(Gdx.graphics.getHeight() / 2) - (img.getHeight() / 2), img.getWidth() / 2, 
-					img.getHeight() / 2, img.getWidth(), img.getHeight(), 1, 1, 
-						(int)Math.toDegrees(rotation) + 90);
+		batch.draw(img_1, playerX, playerY, originX, originY, img.getWidth(), img.getHeight(), 1, 1, (int)Math.toDegrees(rotation) + 90);
 		batch.end();
 		// THIS SHOULD BE MOVED TO THE PLAYER CLASS
 		

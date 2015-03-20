@@ -26,6 +26,8 @@ public class Enemy {
 		
 		enemyTex = new Texture("enemy.png");
 		
+		enemyRect = new Rectangle(enemyX, enemyY, enemyTex.getWidth(), enemyTex.getHeight());
+		
 		if (Math.random() > .5)
 			X = true;
 		else
@@ -44,12 +46,12 @@ public class Enemy {
 			enemyY = UniversalYPos -  128;
 		else
 			enemyY = UniversalYPos + Gdx.graphics.getHeight() + 128;
-		
-		enemyRect = new Rectangle(enemyX, enemyY, enemyTex.getWidth(), enemyTex.getHeight());
 	}
 	
 	public void Update(int playerX, int playerY, ArrayList<Blocks> blockCollisionCheck)
 	{
+		enemyRect = new Rectangle((float)(enemyX - universalXPos), (float)(enemyY - universalYPos), (int)enemyTex.getWidth(), (int)enemyTex.getHeight());
+		
 		rotation = (float)Math.atan2(playerY - enemyY, 
 				playerX - enemyX);//find angle made between player and enemy and faces enemy to player
 		
@@ -66,6 +68,9 @@ public class Enemy {
 	{
 		enemyRect = new Rectangle(enemyX - ux, enemyY - uy, 
 				enemyTex.getWidth(), enemyTex.getHeight());
+		
+		universalXPos = ux;
+		universalYPos = uy;
 		
 		batch.begin();
 		batch.draw(enemyTex, (float)enemyX - ux, (float)enemyY - uy, enemyTex.getWidth() / 2, 
