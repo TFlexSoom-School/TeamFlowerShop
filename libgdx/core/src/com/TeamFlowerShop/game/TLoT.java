@@ -17,7 +17,7 @@ public class TLoT extends ApplicationAdapter {
 	Texture img;
 	TextureRegion img_1;//draw it as a texture region because it draws a certain region of a sprite
 						//and who knows when we might add animation? :D
-	
+	Rectangle playerRect;
 	ArrayList<Bullet> bullets;
 	ArrayList<Enemy> enemies;
 	ArrayList<Blocks> blocks;
@@ -75,6 +75,8 @@ public class TLoT extends ApplicationAdapter {
 
 	
 	public void Update() {
+		playerRect = new Rectangle((Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2), 
+				(Gdx.graphics.getHeight() / 2) - (img.getHeight() / 2), img.getWidth(), img.getHeight());
 		
 		// Code to make the initialization run once
 			if(init)
@@ -146,20 +148,19 @@ public class TLoT extends ApplicationAdapter {
 			}
 		}
 		
-		int playerX = (Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2);
-		int playerY = (Gdx.graphics.getHeight() / 2) - (img.getHeight() / 2);
-		
 		if(enemies.size() != 0)
 		{
 			for (int i = 0; i < enemies.size(); i++)
 			{
-				if(enemies.get(i).enemyRect.overlaps(new Rectangle((playerX-25), (playerY-25), (img.getWidth()+50), (img.getHeight()+50))))
+				if(enemies.get(i).enemyRect.overlaps(playerRect))
 				{
-					enemies.get(i).collision = true;
+					hud.Update(0, enemies, true);
+					enemies.remove(i);
+					break;
 				}
 				else
 				{
-					enemies.get(i).collision = false;
+					hud.Update(0, enemies, false);
 				}
 			}
 		}
