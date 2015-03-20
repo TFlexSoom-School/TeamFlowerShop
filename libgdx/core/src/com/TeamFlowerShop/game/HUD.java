@@ -1,7 +1,9 @@
 package com.TeamFlowerShop.game;
 
 import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
 
@@ -15,22 +17,27 @@ public class HUD {
 	float drawnHealthRemaining;
 	int healthRemaining = 256;
 	int healthLeached = 0;
+	BitmapFont font =  new BitmapFont();
 	
+
 	Rectangle BarRect;
+		
+	String printedKills = "Hello World";
 	
 	boolean X, Y;
-	public HUD(int gold, ArrayList<Enemy> enemies)
-	// Will potentially hold all of the Heads up display information including: Gold, Items, Player health,
+	public HUD(int gold, int kills)
+	// Will potentially hold all of the Heads up display information including Player health, Kills,
 	// and any other necessities.
 	{
 		batch = new SpriteBatch();
+		font = new BitmapFont();
 			
 		healthBar = new Texture("Health Bar.png");
 		
 		drawnHealthRemaining = healthBar.getWidth();
 	}
 	
-	public void Update(int gold, ArrayList<Enemy> Enemies, boolean attacked)
+	public void Update(int gold, int kills, boolean attacked)
 	{
 		if (attacked)
 		{
@@ -39,12 +46,18 @@ public class HUD {
 		else
 		{
 		}
+		
+		printedKills = "" + kills;
 	}
 	
 	public void Draw(float ux, float uy)
 	{	
 		batch.begin();
 		batch.draw(healthBar, (float) ux, (float) uy, healthRemaining, healthBar.getHeight());
+		
+		batch.end();
+		batch.begin();
+		font.draw(batch, printedKills, (float) ux, (float) uy);
 		
 		batch.end();
 	}
