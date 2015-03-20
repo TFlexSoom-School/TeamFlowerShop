@@ -1,5 +1,6 @@
 package com.TeamFlowerShop.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,27 +13,34 @@ public class Bullet {
 	TextureRegion bulletTexReg;
 	
 	float posX, posY;
-	int U_X, U_Y;
+	//float universalXPos, universalYPos;
+	int speed = 20; // The speed of each bullet.
 	double velocityX, velocityY;
 	double rotation;
 	
 	Rectangle bulletRect;
 	
-	public Bullet (double VelocityX, double VelocityY, float PosX, float PosY, double Rotation, int UniversalX, int UniversalY){
+	public Bullet (float mousePosX, float mousePosY){
 		batch = new SpriteBatch();
 		bulletTex = new Texture("Bullet.png");
-		bulletTexReg = new TextureRegion(bulletTex, 0, 
-				0, bulletTex.getWidth(), bulletTex.getHeight());
+		bulletTexReg = new TextureRegion(bulletTex, 0, 0, bulletTex.getWidth(), bulletTex.getHeight()); // I don't know why this is here
 		
-		velocityX = VelocityX;
-		velocityY = VelocityY;
-		posX = PosX;
-		posY = PosY;
+		// Set the rotation of the bullet
+		rotation = Math.atan2(((Gdx.graphics.getHeight() / 2) - mousePosY), 
+				              ((Gdx.graphics.getWidth()  / 2) - mousePosX));
 		
-		rotation = Rotation;
+		// Set the velocities of the bullet based on its rotation
+		velocityX = Math.cos(rotation) * speed;
+		velocityY = Math.sin(rotation) * speed;
 		
-		U_X = 0 - UniversalX;
-		U_Y = 0 - UniversalY;
+		// Set the bullet's position at the middle of the screen
+		posX = Gdx.graphics.getWidth()  / 2;
+		posY = Gdx.graphics.getHeight() / 2;
+		
+		// The player's position will be held in the player class and the player class only
+		//universalXPos = universalXPos_;
+		//universalYPos = universalYPos_;
+		//U_Y = 0 - UniversalY;
 		//universal X and universal Y are VERY IMPORTANT. refers to the x, y val on the map of the BOTTOM LEFT HAND CORNER
 	}
 	

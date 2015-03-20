@@ -22,6 +22,7 @@ public class TLoT extends ApplicationAdapter {
 	ArrayList<Wall> walls;
 	Ground gRenderer;
 	HUD hud;
+	Player player;
 	
 	@Override
 	public void create () {
@@ -35,6 +36,7 @@ public class TLoT extends ApplicationAdapter {
 		walls = new ArrayList<Wall>();
 		gRenderer = new Ground();
 		hud = new HUD(0, enemies);
+		player = new Player(); // The player class will hold the player information rather than here
 	}
 
 	public enum MoveDirection {
@@ -42,6 +44,7 @@ public class TLoT extends ApplicationAdapter {
 	}
 	
 	int universalXPos = 0, universalYPos = 0;
+	
 	float velocityX, velocityY;
 	float speed = 10;
 	int MousePosX, MousePosY;
@@ -56,6 +59,8 @@ public class TLoT extends ApplicationAdapter {
 	float boxW = 0, boxH = 0;
 	
 	int health = 256;
+
+	boolean init = true;
 	
 	// Initialization function to be run once at the beginning of game
 	// I will be using it to spawn walls
@@ -68,25 +73,29 @@ public class TLoT extends ApplicationAdapter {
 		}
 			
 	}
-		
-	boolean init = true;
-
 	
+	// Update function to run every update. This is called in the render function
 	public void Update() {
 		
 		// Code to make the initialization run once
-			if(init)
-			{
-				Initialize();
-				init = !init;
-			}
+		if(init)
+		{
+			Initialize();
+			init = !init;
+		}
 		
+		// Code to deal with the walls made with the right mouse click. I'll leave this here for now.
 		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
 			thisFrameRMD = true;
 		else
 			thisFrameRMD = false;
+		
+		// This may need to be moved to the end with the rest of the updates
 		gRenderer.Update(universalXPos, universalYPos);
 		
+		// CODE FOR FIRING BULLETS //
+		
+		// Get the mouse position to hand it over to the bullet
 		MousePosX = Gdx.input.getX();
 		MousePosY = Gdx.graphics.getHeight() - Gdx.input.getY();//have to do this because mouse Y is calculated with Y incrementing as it goes down but
 																//with everything else incrementing from down to up 
@@ -98,29 +107,43 @@ public class TLoT extends ApplicationAdapter {
 		velocityY = (float)Math.sin(rotation) * 20;//a search on the trig unit circle should come up with something if you want to know more
 		
 		if (timer % 5 == 0 && Gdx.input.isButtonPressed(Input.Buttons.LEFT))
-			bullets.add(new Bullet(velocityX, velocityY, 
-					(Gdx.graphics.getWidth() / 2), 
-						(Gdx.graphics.getHeight() / 2), rotation, universalXPos, universalYPos));
+			bullets.add(new Bullet(MousePosX, MousePosY));
+			
+			//bullets.add(new Bullet(velocityX, velocityY, 
+			//		(Gdx.graphics.getWidth() / 2), 
+			//			(Gdx.graphics.getHeight() / 2), rotation, universalXPos, universalYPos));
+		
+		// END CODE FOR FIRING BULLETS //
+		
+		// ENEMY SPAWN CODE
 		
 		if (timer % 200 == 0)//spawns an enemy every 200 updates NEED TO IMPROVE: random spawning, enemy hardness level, rectangles that are rotated? :3 pls?
 			enemies.add(new Enemy(universalXPos, universalYPos));
 		
+		// END ENEMY SPAWN CODE
+		
+		// UPDATE SECTION //
+		
 		for (Enemy e : enemies)
 		{//updates each enemy in the list enemies
-			e.Update(universalXPos + (Gdx.graphics.getWidth() / 2), universalYPos + (Gdx.graphics.getHeight() / 2), blocks);
+			e.Update(universalXPos + (Gdx.graphics.getWidth()  / 2), 
+					 universalYPos + (Gdx.graphics.getHeight() / 2), blocks);
 		}
 		
 		for (Bullet b : bullets)
 		{//updates each bullet in the list of bullets
-			b.Update(universalXPos + (Gdx.graphics.getWidth() / 2), 
-					universalYPos + (Gdx.graphics.getHeight() / 2));
-			
+			b.Update(universalXPos + (Gdx.graphics.getWidth()  / 2), 
+					 universalYPos + (Gdx.graphics.getHeight() / 2));
 		}
 		
 		for (Wall w : walls)
 		{
 			w.Update();
 		}
+		
+		// END UPDATE SECTION //
+		
+		// BULLET - ENEMY COLLISION //
 		
 		//used this instead of size - 1 because then if there was only one instance of the object
 		//the two wouldn't be recognized in the for loop and if it was <= in the for loop then
@@ -146,6 +169,10 @@ public class TLoT extends ApplicationAdapter {
 			}
 		}
 		
+		// END BULLET - ENEMY COLLISION
+		
+		// PLAYER MOVEMENT //
+				
 		//redirects to move method which deals with movement
 		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
 			Move(MoveDirection.UP);
@@ -156,7 +183,9 @@ public class TLoT extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
 			Move(MoveDirection.RIGHT);
 
+		// END PLAYER MOVEMENT //
 		
+		// BULLET AUTOMATIC DELETION //
 		for (int i = 0; i < bullets.size(); i++)
 		{
 			//calculate distance
@@ -169,7 +198,9 @@ public class TLoT extends ApplicationAdapter {
 				bullets.remove(i);
 			}
 		}
+		// END BULLET AUTOMATIC DELETION //
 		
+		// MOUSE GENERATED WALLS CONTINUED //
 		if (!lastFrameRMD && thisFrameRMD)
 		{
 			boxX = Gdx.input.getX();
@@ -197,6 +228,7 @@ public class TLoT extends ApplicationAdapter {
 		
 		for (Blocks b : blocks)
 			b.Update(universalXPos, universalYPos);
+		// END MOUSE GENERATED WALLS CONTIUNUED //
 	}
 	
 	@Override
@@ -212,13 +244,14 @@ public class TLoT extends ApplicationAdapter {
 			b.Draw();
 		}
 		
-		
+		// THIS SHOULD BE MOVED TO THE PLAYER CLASS
 		batch.begin();//draw the player
 		batch.draw(img_1, (Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2), 
 				(Gdx.graphics.getHeight() / 2) - (img.getHeight() / 2), img.getWidth() / 2, 
 					img.getHeight() / 2, img.getWidth(), img.getHeight(), 1, 1, 
 						(int)Math.toDegrees(rotation) + 90);
 		batch.end();
+		// THIS SHOULD BE MOVED TO THE PLAYER CLASS
 		
 		for (Enemy e : enemies)
 		{//draws each enemy in the list of enemies
@@ -239,29 +272,35 @@ public class TLoT extends ApplicationAdapter {
 		timer += 1;
 	}
 	
+	// MOVE TO PLAYER CLASS //
+	
 	public void Move (MoveDirection d)
 	{//Move() deals with movement
 		if (d == MoveDirection.UP)
 		{
 			universalYPos += speed;
-			MoveAll(false, -speed);
+			//MoveAll(false, -speed);
 		}
 		if (d == MoveDirection.LEFT)
 		{
 			universalXPos -= speed;
-			MoveAll(true, speed);
+			//MoveAll(true, speed);
 		}
 		if (d == MoveDirection.DOWN)
 		{
 			universalYPos -= speed;
-			MoveAll(false, speed);
+			//MoveAll(false, speed);
 		}
 		if (d == MoveDirection.RIGHT)
 		{
 			universalXPos += speed;
-			MoveAll(true, -speed);
+			//MoveAll(true, -speed);
 		}
 	}
+	
+	// MOVE TO PLAYER CLASS //
+	
+	// WE HAVE BETTER WAYS OF HANDLING THIS //
 	
 	public void MoveAll (Boolean XY, float distance)
 	{//XY == true means the X value is being changed. else, y val.
@@ -282,5 +321,6 @@ public class TLoT extends ApplicationAdapter {
 			}
 		}
 	}
-//>>>>>>> branch 'master' of https://github.com/TFlexSoom/TeamFlowerShop.git
+	
+	// WE HAVE BETTER WAYS OF HANDLING THIS //
 }
