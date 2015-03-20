@@ -44,11 +44,11 @@ public class Bullet {
 		//universal X and universal Y are VERY IMPORTANT. refers to the x, y val on the map of the BOTTOM LEFT HAND CORNER
 	}
 	
-	public void Update(int UniversalX, int UniversalY){
-		bulletRect= new Rectangle(posX, posY, bulletTex.getWidth(), bulletTex.getHeight());
+	public void Update(/*int UniversalX, int UniversalY*/ int playerVelX, int playerVelY){
+		bulletRect = new Rectangle(posX, posY, bulletTex.getWidth(), bulletTex.getHeight());
 		
-		posX -= velocityX;
-		posY -= velocityY;
+		posX -= (velocityX + playerVelX);
+		posY -= (velocityY + playerVelY);
 	}
 	
 	public void DisposeBullet()

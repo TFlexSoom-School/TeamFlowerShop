@@ -14,9 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class TLoT extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture img;
-	TextureRegion img_1;//draw it as a texture region because it draws a certain region of a sprite
-						//and who knows when we might add animation? :D
+	
 	Rectangle playerRect;
 	ArrayList<Bullet> bullets;
 	ArrayList<Enemy> enemies;
@@ -29,8 +27,6 @@ public class TLoT extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("Player.png");
-		img_1 = new TextureRegion(img, 0, 0, img.getWidth(), img.getHeight());
 		
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<Enemy>();
@@ -78,8 +74,9 @@ public class TLoT extends ApplicationAdapter {
 	
 	// Update function to run every update. This is called in the render function
 	public void Update() {
-		playerRect = new Rectangle((Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2), 
-				(Gdx.graphics.getHeight() / 2) - (img.getHeight() / 2), img.getWidth(), img.getHeight());
+		playerRect = new Rectangle((Gdx.graphics.getWidth()  / 2) - (player.img.getWidth()  / 2), 
+								   (Gdx.graphics.getHeight() / 2) - (player.img.getHeight() / 2), 
+								    player.img.getWidth(), player.img.getHeight());
 		
 		// Code to make the initialization run once
 		if(init)
@@ -136,14 +133,16 @@ public class TLoT extends ApplicationAdapter {
 		
 		for (Bullet b : bullets)
 		{//updates each bullet in the list of bullets
-			b.Update(universalXPos + (Gdx.graphics.getWidth()  / 2), 
-					 universalYPos + (Gdx.graphics.getHeight() / 2));
+			b.Update(/* universalXPos + (Gdx.graphics.getWidth()  / 2) */ player.velX, 
+					 /* universalYPos + (Gdx.graphics.getHeight() / 2) */ player.velY);
 		}
 		
 		for (Wall w : walls)
 		{
 			w.Update();
 		}
+		
+		player.Update();
 		
 		// END UPDATE SECTION //
 		
@@ -263,19 +262,7 @@ public class TLoT extends ApplicationAdapter {
 			b.Draw();
 		}
 		
-//<<<<<<< HEAD
-		// THIS SHOULD BE MOVED TO THE PLAYER CLASS
-//=======
-		float playerX = (Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2);
-		float playerY = (Gdx.graphics.getHeight() / 2) - (img.getHeight() / 2);
-		float originX = img.getWidth() / 2;
-		float originY = img.getHeight() / 2;
-		
-//>>>>>>> branch 'master' of https://github.com/TFlexSoom/TeamFlowerShop.git
-		batch.begin();//draw the player
-		batch.draw(img_1, playerX, playerY, originX, originY, img.getWidth(), img.getHeight(), 1, 1, (int)Math.toDegrees(rotation) + 90);
-		batch.end();
-		// THIS SHOULD BE MOVED TO THE PLAYER CLASS
+		player.Draw();
 		
 		for (Enemy e : enemies)
 		{//draws each enemy in the list of enemies
