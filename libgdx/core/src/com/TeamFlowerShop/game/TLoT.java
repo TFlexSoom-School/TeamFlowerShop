@@ -33,7 +33,7 @@ public class TLoT extends ApplicationAdapter {
 		blocks = new ArrayList<Blocks>();
 		walls = new ArrayList<Wall>();
 		gRenderer = new Ground();
-		hud = new HUD(0, enemies);
+		hud = new HUD(0, 1);
 		player = new Player(); // The player class will hold the player information rather than here
 	}
 
@@ -176,13 +176,13 @@ public class TLoT extends ApplicationAdapter {
 			{
 				if(enemies.get(i).enemyRect.overlaps(playerRect))
 				{
-					hud.Update(0, enemies, true);
+					hud.Update(0, 1, true);
 					enemies.remove(i);
 					break;
 				}
 				else
 				{
-					hud.Update(0, enemies, false);
+					hud.Update(0, 1, false);
 				}
 			}
 		}
