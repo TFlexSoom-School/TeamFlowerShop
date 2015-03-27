@@ -102,10 +102,10 @@ public class TLoT extends ApplicationAdapter {
 																//with everything else incrementing from down to up 
 		
 		rotation = Math.atan2(((Gdx.graphics.getHeight() / 2) - MousePosY), 
-					((Gdx.graphics.getWidth() / 2) - MousePosX));
+							  ((Gdx.graphics.getWidth()  / 2) - MousePosX));
 		
-		velocityX = (float)Math.cos(rotation) * 20;//simple trig to find how fast up it should go and how fast to the side
-		velocityY = (float)Math.sin(rotation) * 20;//a search on the trig unit circle should come up with something if you want to know more
+		//velocityX = (float)Math.cos(rotation) * 20;//simple trig to find how fast up it should go and how fast to the side
+		//velocityY = (float)Math.sin(rotation) * 20;//a search on the trig unit circle should come up with something if you want to know more
 		
 		if (timer % 5 == 0 && Gdx.input.isButtonPressed(Input.Buttons.LEFT))
 			bullets.add(new Bullet(MousePosX, MousePosY));
@@ -272,13 +272,13 @@ public class TLoT extends ApplicationAdapter {
 		for (Blocks b : blocks)
 			b.Draw();
 		
-		hud.Draw(0, 0);
-		// draws HUD class
-		
 		for (Wall w : walls)
 		{
 			w.Draw(universalXPos, universalYPos);
 		}
+		
+		hud.Draw(0, 0);
+		// draws HUD class
 		
 		timer += 1;
 	}
