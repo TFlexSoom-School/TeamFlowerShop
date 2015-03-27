@@ -24,7 +24,7 @@ public class Wall {
 		posY = y;
 	}
 	
-	// Update function for the wall
+	// Update function for the wall mainly it will check for collision with the player and bullets
 	public void Update ()
 	{
 		
@@ -40,5 +40,5 @@ public class Wall {
 		batch.end();
 		
 	}
-	
+		
 }

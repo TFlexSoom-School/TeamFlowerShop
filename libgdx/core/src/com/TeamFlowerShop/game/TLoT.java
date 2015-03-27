@@ -142,7 +142,7 @@ public class TLoT extends ApplicationAdapter {
 			w.Update();
 		}
 		
-		player.Update();
+		player.Update(rotation, walls);
 		
 		// END UPDATE SECTION //
 		
@@ -189,19 +189,8 @@ public class TLoT extends ApplicationAdapter {
 		
 		// END BULLET - ENEMY COLLISION
 		
-		// PLAYER MOVEMENT //
-				
-		//redirects to move method which deals with movement
-		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
-			Move(MoveDirection.UP);
-		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN))
-			Move(MoveDirection.DOWN);
-		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
-			Move(MoveDirection.LEFT);
-		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
-			Move(MoveDirection.RIGHT);
-
-		// END PLAYER MOVEMENT //
+		universalXPos = player.posX;
+		universalYPos = player.posY;
 		
 		// BULLET AUTOMATIC DELETION //
 		for (int i = 0; i < bullets.size(); i++)
@@ -284,7 +273,7 @@ public class TLoT extends ApplicationAdapter {
 	}
 	
 	// MOVE TO PLAYER CLASS //
-	
+	/*
 	public void Move (MoveDirection d)
 	{//Move() deals with movement
 		if (d == MoveDirection.UP)
@@ -308,7 +297,7 @@ public class TLoT extends ApplicationAdapter {
 			//MoveAll(true, -speed);
 		}
 	}
-	
+	*/
 	// MOVE TO PLAYER CLASS //
 	
 	// WE HAVE BETTER WAYS OF HANDLING THIS //
