@@ -1,6 +1,8 @@
 package com.TeamFlowerShop.game;
 
 //import com.TeamFlowerShop.game.TLoT.MoveDirection;
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
@@ -31,10 +33,18 @@ public class Player {
 	float originY;
 	double rotation;
 	
+	boolean[] collisionDir; // an array to hold which directions the player is colliding with a wall to restrict their movement
+	// [up?, right?, down?, left?]
+	
+	public enum CollisionDirection {
+		LEFT, RIGHT, UP, DOWN
+	}
 	
 	public Player () 
 	{
 		batch = new SpriteBatch();
+		
+		collisionDir = new boolean[4];
 		
 		speed = 10;
 		
@@ -42,21 +52,11 @@ public class Player {
 		img_1 = new TextureRegion(img, 0, 0, img.getWidth(), img.getHeight());
 	}
 	
-	public void Update () 
-	{
+	public void Update (double mouseAngle, ArrayList<Wall> walls) 
+	{		
 		HandlePlayerMovement();
 		
-		velX = 0; 
-		velY = 0;
-		
-		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
-			velY += speed;
-		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN))
-			velY -= speed;
-		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
-			velX -= speed;
-		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
-			velX += speed;
+		rotation = mouseAngle; // make the player face the cursor
 	}
 	
 	public void Draw ()
@@ -71,8 +71,45 @@ public class Player {
 		batch.end();
 	}
 	
+	char a = 1;
+	
+	public CollisionDirection CheckWallCollision (Wall wall)
+	{
+		// Check if player left bound is touching wall
+		if(posX < wall.posX + wall.wallTex.getWidth() && 
+		   posY > wall.posY + wall.wallTex.getHeight() &&
+		   posY + img.getHeight() < wall.posY)
+		{
+			return CollisionDirection.LEFT;
+		}
+		
+		// Check if player right bound is touching wall
+		if(posX + img.getWidth() < wall.posX && 
+		   posY > wall.posY + wall.wallTex.getHeight() &&
+		   posY + img.getHeight() < wall.posY)
+		{
+			return CollisionDirection.RIGHT;
+		}
+		
+		return null;
+	}
+	
 	public void HandlePlayerMovement ()
 	{
+		velX = 0; 
+		velY = 0;
 		
+		// this big block handles movement
+		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
+			velY += speed;
+		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN))
+			velY -= speed;
+		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
+			velX -= speed;
+		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
+			velX += speed;
+		
+		posX += velX;
+		posY += velY;
 	}
 }
