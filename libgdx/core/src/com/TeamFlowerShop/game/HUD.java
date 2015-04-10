@@ -57,7 +57,7 @@ public class HUD {
 		
 		batch.end();
 		batch.begin();
-		font.draw(batch, printedKills, (float) ux, (float) uy);
+		font.draw(batch, printedKills, (float) ux, (float) uy, 10, 10);
 		
 		batch.end();
 	}

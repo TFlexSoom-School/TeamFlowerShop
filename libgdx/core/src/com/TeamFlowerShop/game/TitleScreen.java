@@ -1,6 +1,7 @@
 package com.TeamFlowerShop.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
@@ -11,24 +12,30 @@ public class TitleScreen {
 	
 	Texture titleBackdrop;
 	Texture startButton;
+	Rectangle startButtonRect;
 	
-	int posX, posY;
+	float posX, posY;
 	
 	// Initialization for the wall
-	public TitleScreen ()
+	public TitleScreen (float UniversalXPos, float UniversalYPos)
 	{
+		posX = UniversalXPos;
+		posY = UniversalYPos;
 		titleBackdrop = new Texture("Title.png");
 		startButton = new Texture("StartA.png");
+		startButtonRect = new Rectangle(posX, posY, startButton.getWidth(), startButton.getHeight());
 		
-		batch = new SpriteBatch();
-		
-	
+		batch = new SpriteBatch();	
 	}
 	
 	// Update function for the wall
-	public void Update ()
+	public boolean Update()
 	{
-		
+		if(startButtonRect.contains(Gdx.input.getX(), Gdx.input.getY()) && Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+		{
+			return false;
+		}
+		return true;  //Start has not been clicked
 	}
 	
 	// Draw function for the wall
@@ -42,5 +49,5 @@ public class TitleScreen {
 		batch.end();
 		
 	}
-	}
+}
 	

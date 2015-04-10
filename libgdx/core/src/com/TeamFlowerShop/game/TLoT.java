@@ -23,6 +23,8 @@ public class TLoT extends ApplicationAdapter {
 	Ground gRenderer;
 	HUD hud;
 	Player player;
+	TitleScreen title;
+	boolean showTitleScreen;
 	
 	@Override
 	public void create () {
@@ -35,6 +37,8 @@ public class TLoT extends ApplicationAdapter {
 		gRenderer = new Ground();
 		hud = new HUD(0, 1);
 		player = new Player(); // The player class will hold the player information rather than here
+		title = new TitleScreen(universalXPos, universalYPos);
+		showTitleScreen = true;
 	}
 
 	public enum MoveDirection {
@@ -59,6 +63,7 @@ public class TLoT extends ApplicationAdapter {
 	int health = 256;
 
 	boolean init = true;
+	boolean start = false;
 	
 	// Initialization function to be run once at the beginning of game
 	// I will be using it to spawn walls
@@ -239,68 +244,56 @@ public class TLoT extends ApplicationAdapter {
 	}
 	
 	@Override
-	public void render () {
-		Update();
+	public void render ()
+	{
+		if(showTitleScreen)
+		{
+			showTitleScreen = title.Update();
+		}
+
+
+		if(!showTitleScreen)
+		{
+			Update();
+		}
 		
+				
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//HERE STARTS ALL THE DRAW CODE. ENGINE ONLY HAS ONE LOOP METHOD, AND IT IS RENDER.
 		gRenderer.Draw(universalXPos, universalYPos);
-		
-		for (Bullet b : bullets){//draws each bullet in the list of bullets
-			b.Draw();
+			
+		if(showTitleScreen)
+		{	
+			title.Draw(universalXPos, universalYPos);		
 		}
-		
-		player.Draw();
-		
-		for (Enemy e : enemies)
-		{//draws each enemy in the list of enemies
-			e.Draw(universalXPos, universalYPos);
-		}
-		
-		for (Blocks b : blocks)
-			b.Draw();
-		
-		for (Wall w : walls)
+		else
 		{
-			w.Draw(universalXPos, universalYPos);
-		}
-		
-		hud.Draw(0, 0);
-		// draws HUD class
-		
-		timer += 1;
-	}
-	
-	// MOVE TO PLAYER CLASS //
-	/*
-	public void Move (MoveDirection d)
-	{//Move() deals with movement
-		if (d == MoveDirection.UP)
-		{
-			universalYPos += speed;
-			//MoveAll(false, -speed);
-		}
-		if (d == MoveDirection.LEFT)
-		{
-			universalXPos -= speed;
-			//MoveAll(true, speed);
-		}
-		if (d == MoveDirection.DOWN)
-		{
-			universalYPos -= speed;
-			//MoveAll(false, speed);
-		}
-		if (d == MoveDirection.RIGHT)
-		{
-			universalXPos += speed;
-			//MoveAll(true, -speed);
+			for (Bullet b : bullets){//draws each bullet in the list of bullets
+				b.Draw();
+			}
+			
+			player.Draw();
+			
+			for (Enemy e : enemies)
+			{//draws each enemy in the list of enemies
+				e.Draw(universalXPos, universalYPos);
+			}
+			
+			for (Blocks b : blocks)
+				b.Draw();
+			
+			for (Wall w : walls)
+			{
+				w.Draw(universalXPos, universalYPos);
+			}
+			
+			hud.Draw(0, 0);
+			// draws HUD class
+			
+			timer += 1;
 		}
 	}
-	*/
-	// MOVE TO PLAYER CLASS //
-	
-	// WE HAVE BETTER WAYS OF HANDLING THIS //
 	
 	public void MoveAll (Boolean XY, float distance)
 	{//XY == true means the X value is being changed. else, y val.
