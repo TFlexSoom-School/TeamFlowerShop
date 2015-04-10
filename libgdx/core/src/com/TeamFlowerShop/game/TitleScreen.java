@@ -13,7 +13,7 @@ public class TitleScreen {
 	Texture titleBackdrop;
 	Texture startButton;
 	Rectangle startButtonRect;
-	
+	float MousePosY;
 	float posX, posY;
 	
 	// Initialization for the wall
@@ -24,6 +24,7 @@ public class TitleScreen {
 		titleBackdrop = new Texture("Title.png");
 		startButton = new Texture("StartA.png");
 		startButtonRect = new Rectangle(posX, posY, startButton.getWidth(), startButton.getHeight());
+		MousePosY = Gdx.graphics.getHeight() - Gdx.input.getY();
 		
 		batch = new SpriteBatch();	
 	}
@@ -31,7 +32,7 @@ public class TitleScreen {
 	// Update function for the wall
 	public boolean Update()
 	{
-		if(startButtonRect.contains(Gdx.input.getX(), Gdx.input.getY()) && Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+		if(startButtonRect.contains(Gdx.input.getX(), MousePosY) && Gdx.input.isButtonPressed(Input.Buttons.LEFT))
 		{
 			return false;
 		}
