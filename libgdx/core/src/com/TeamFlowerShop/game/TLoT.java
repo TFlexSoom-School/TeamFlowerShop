@@ -157,7 +157,7 @@ public class TLoT extends ApplicationAdapter {
 		player.Update(rotation, walls);
 		
 		themeSong.setLooping(true);
-		
+		themeSong.play();
 		// END UPDATE SECTION //
 		
 		// BULLET - ENEMY COLLISION //
