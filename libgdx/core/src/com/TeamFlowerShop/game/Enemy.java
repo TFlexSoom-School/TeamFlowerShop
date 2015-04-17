@@ -70,7 +70,7 @@ public class Enemy {
 		batch.draw(enemyTex, (float) enemyX - ux, (float) enemyY - uy,
 				enemyTex.getWidth() / 2, enemyTex.getHeight() / 2,
 				enemyTex.getWidth(), enemyTex.getHeight(), 1, 1,
-				(float) Math.toDegrees(rotation), 0, 0, enemyTex.getWidth(),
+				(float) Math.toDegrees(rotation+ (Math.toRadians(90))), 0, 0, enemyTex.getWidth(),
 				enemyTex.getHeight(), false, false);
 		batch.end();
 	}

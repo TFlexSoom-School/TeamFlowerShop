@@ -24,7 +24,7 @@ public class TitleScreen {
 		posY = UniversalYPos;
 		titleBackdrop = new Texture("Title.png");
 		startButton = new Texture("StartA.png");
-		startButtonRect = new Rectangle((posX/64)*20, (posY/48)*20, startButton.getWidth(), startButton.getHeight());
+		startButtonRect = new Rectangle(((Gdx.graphics.getWidth()/64)*20), (Gdx.graphics.getHeight()/48)*20, startButton.getWidth(), startButton.getHeight());
 		
 		batch = new SpriteBatch();	
 	}
@@ -32,17 +32,18 @@ public class TitleScreen {
 
 	public boolean Update()
 	{
-		//startButton = new Texture();
 		MousePosY = Gdx.graphics.getHeight() - Gdx.input.getY();
-		/*if (startButtonRect.contains(Gdx.input.getX(), MousePosY))
+		
+		if (startButtonRect.contains(Gdx.input.getX(), (MousePosY)))
 		{
 			startButton = new Texture("StartB.png");
 		}
 		else
 		{
-			start button = new Texture("StartA.png");
-		}*/
-		if(startButtonRect.contains((Gdx.input.getX()/64)*20, (MousePosY/48)*20) && Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+			startButton = new Texture("StartA.png");
+		}
+		
+		if(startButtonRect.contains(Gdx.input.getX(), MousePosY) && Gdx.input.isButtonPressed(Input.Buttons.LEFT))
 		{
 			return false;
 		}
@@ -56,7 +57,7 @@ public class TitleScreen {
 		batch.begin();
 		
 		batch.draw(titleBackdrop, ux , uy);
-		batch.draw(startButton, ((Gdx.graphics.getWidth()/64)*20)-ux,  ((Gdx.graphics.getHeight()/48)*20)-uy);
+		batch.draw(startButton, ((Gdx.graphics.getWidth()/64)*20),  ((Gdx.graphics.getHeight()/48)*20));
 		
 		batch.end();
 		
