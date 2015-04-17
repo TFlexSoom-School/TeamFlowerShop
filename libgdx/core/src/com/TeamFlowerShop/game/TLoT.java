@@ -6,11 +6,13 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.Audio;
 
 public class TLoT extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -25,6 +27,7 @@ public class TLoT extends ApplicationAdapter {
 	Player player;
 	TitleScreen title;
 	boolean showTitleScreen;
+	Music themeSong;
 	
 	@Override
 	public void create () {
@@ -39,6 +42,7 @@ public class TLoT extends ApplicationAdapter {
 		player = new Player(); // The player class will hold the player information rather than here
 		title = new TitleScreen(universalXPos, universalYPos);
 		showTitleScreen = true;
+		themeSong = Gdx.audio.newMusic(Gdx.files.internal("Illuminati.mp3"));
 	}
 
 	public enum MoveDirection {
@@ -148,6 +152,8 @@ public class TLoT extends ApplicationAdapter {
 		}
 		
 		player.Update(rotation, walls);
+		
+		themeSong.setLooping(true);
 		
 		// END UPDATE SECTION //
 		
