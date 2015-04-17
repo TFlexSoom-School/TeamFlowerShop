@@ -25,6 +25,7 @@ public class TLoT extends ApplicationAdapter {
 	Player player;
 	TitleScreen title;
 	boolean showTitleScreen;
+	Level level1;
 	
 	@Override
 	public void create () {
@@ -39,6 +40,8 @@ public class TLoT extends ApplicationAdapter {
 		player = new Player(); // The player class will hold the player information rather than here
 		title = new TitleScreen(universalXPos, universalYPos);
 		showTitleScreen = true;
+		level1 = new Level();
+		level1.populateLevel();
 	}
 
 	public enum MoveDirection {
