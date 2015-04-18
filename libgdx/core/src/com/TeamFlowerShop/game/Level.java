@@ -11,7 +11,7 @@ public class Level {
 				  		 		+ "O E X X O X X O O O O O O E O;"
 				  		 		+ "O X X X O X X X X X X O X X O;"
 				  		 		+ "X O X X O X X O O X X O X X O;"
-				  		 		+ "X O X X K X X X O X X X X X O;"
+				  		 		+ "X O X X K O X X O X X X X X O;"
 				  		 		+ "X O X X O O O X O X X X X E O;"
 				  		 		+ "X O X X X X X H O X X O O O O;"
 				  		 		+ "X O E X X X O X O X X O E E O;"
