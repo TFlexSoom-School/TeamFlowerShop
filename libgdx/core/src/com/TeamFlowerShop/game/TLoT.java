@@ -29,6 +29,7 @@ public class TLoT extends ApplicationAdapter {
 	boolean showTitleScreen;
 	ArrayList<ArrayList<String>> level;
 	Music themeSong;
+    int intialHealth=256;	
 	
 	@Override
 	public void create () {
@@ -38,7 +39,7 @@ public class TLoT extends ApplicationAdapter {
 		enemies = new ArrayList<Enemy>();
 		blocks = new ArrayList<Blocks>();
 		walls = new ArrayList<Wall>();
-		hud = new HUD(0, 1);
+		hud = new HUD(0, 1, intialHealth);
 		player = new Player(); // The player class will hold the player information rather than here
 		title = new TitleScreen(universalXPos, universalYPos);
 		showTitleScreen = true;
