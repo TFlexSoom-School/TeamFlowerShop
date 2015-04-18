@@ -29,7 +29,7 @@ public class TLoT extends ApplicationAdapter {
 	boolean showTitleScreen;
 	Level level1;
 	Music themeSong;
-	
+	int healthRemaining;
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -39,13 +39,15 @@ public class TLoT extends ApplicationAdapter {
 		blocks = new ArrayList<Blocks>();
 		walls = new ArrayList<Wall>();
 		gRenderer = new Ground();
-		hud = new HUD(0, 1);
+		healthRemaining = 256;
+		hud = new HUD(0, 1, healthRemaining);
 		player = new Player(); // The player class will hold the player information rather than here
 		title = new TitleScreen(universalXPos, universalYPos);
 		showTitleScreen = true;
 		level1 = new Level();
 		level1.populateLevel();
 		themeSong = Gdx.audio.newMusic(Gdx.files.internal("Illuminati.mp3"));
+		
 	}
 
 	public enum MoveDirection {

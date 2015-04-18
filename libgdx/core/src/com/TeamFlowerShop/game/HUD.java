@@ -14,8 +14,6 @@ public class HUD {
 	float rotation = 0;
 	float barX, barY;
 	double universalXPos, universalYPos;
-	float drawnHealthRemaining;
-	int healthRemaining = 256;
 	int healthLeached = 0;
 	BitmapFont font =  new BitmapFont();
 	
@@ -25,7 +23,7 @@ public class HUD {
 	String printedKills = "Hello World";
 	
 	boolean X, Y;
-	public HUD(int gold, int kills)
+	public HUD(int gold, int kills, int healthRemaining)
 	// Will potentially hold all of the Heads up display information including Player health, Kills,
 	// and any other necessities.
 	{
@@ -34,19 +32,15 @@ public class HUD {
 			
 		healthBar = new Texture("Health Bar.png");
 		
-		drawnHealthRemaining = healthBar.getWidth();
 	}
 	
-	public void Update(int gold, int kills, boolean attacked)
+	public void Update(int gold, int kills, boolean attacked, int healthRemaining)
 	{
 		if (attacked)
 		{
 			healthRemaining -= 32;
 		}
-		else
-		{
-		}
-		
+
 		printedKills = "" + kills;
 	}
 	
