@@ -2,6 +2,7 @@ package com.TeamFlowerShop.game;
 
 import java.awt.Point;
 import java.util.*;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,14 +11,15 @@ public class Ground {
 	SpriteBatch batch;
 	ArrayList<GroundPiece> pieces;
 	Texture[] ground;
+	ArrayList<ArrayList<String>> currentLevel;
 	
-	public Ground()
+	public Ground(ArrayList<ArrayList<String>> level)
 	{
 		batch = new SpriteBatch();
 		pieces = new ArrayList<GroundPiece>();
-		
-		ground = new Texture[] {new Texture("gsquare1.png"), new Texture("gsquare2.png"), 
-			new Texture("gsquare3.png"), new Texture("gsquare4.png")};
+		currentLevel = level;
+		ground = new Texture[] {new Texture("gsquare1w.png"), new Texture("gsquare2.png"), 
+			new Texture("gsquare3e.png"), new Texture("gsquare4h.png"), new Texture("gsquare1g.png")};
 	}
 	
 	int groundSquareDims = new Texture("gsquare1.png").getHeight();
@@ -42,6 +44,38 @@ public class Ground {
 									 //128 off the lower left hand side of the screen
 	}
 	
+	public GroundPiece getGroundPiece(int X, int Y)
+	{
+		int row = (X / 128) + 6;
+		int collumn = (Y / 128) + 6;
+		String pieceName = currentLevel.get(row).get(collumn);
+		
+		if(pieceName.equalsIgnoreCase("O"))
+		{
+			return new GroundPiece(1, X, Y);
+		}
+		if(pieceName.equalsIgnoreCase("X"))
+		{
+			return new GroundPiece(2, X, Y);
+		}
+		if(pieceName.equalsIgnoreCase("E"))
+		{
+			return new GroundPiece(3, X, Y);
+		}
+		if(pieceName.equalsIgnoreCase("H"))
+		{
+			return new GroundPiece(4, X, Y);
+		}
+		if(pieceName.equalsIgnoreCase("K"))
+		{
+			return new GroundPiece(5, X, Y);
+		}
+		else 
+		{
+			return null;
+		}
+	}
+	
 	public void UpdateRender(int UniversalXPos, int UniversalYPos)
 	{
 		numX = findClosestXY(UniversalXPos, UniversalYPos).x;
@@ -54,7 +88,7 @@ public class Ground {
 			{
 				if (!Contains(new GroundPiece(1, tempX, numY), pieces))
 				{
-					pieces.add(new GroundPiece((int)Math.ceil(Math.random() * 4), tempX, numY));
+					pieces.add(getGroundPiece(tempX, numY));
 				}
 				tempX += groundSquareDims;
 			}

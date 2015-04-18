@@ -27,7 +27,7 @@ public class TLoT extends ApplicationAdapter {
 	Player player;
 	TitleScreen title;
 	boolean showTitleScreen;
-	Level level1;
+	ArrayList<ArrayList<String>> level;
 	Music themeSong;
 	
 	@Override
@@ -38,13 +38,12 @@ public class TLoT extends ApplicationAdapter {
 		enemies = new ArrayList<Enemy>();
 		blocks = new ArrayList<Blocks>();
 		walls = new ArrayList<Wall>();
-		gRenderer = new Ground();
 		hud = new HUD(0, 1);
 		player = new Player(); // The player class will hold the player information rather than here
 		title = new TitleScreen(universalXPos, universalYPos);
 		showTitleScreen = true;
-		level1 = new Level();
-		level1.populateLevel();
+		level = Level.GetLevel(1);
+		gRenderer = new Ground(level);
 		themeSong = Gdx.audio.newMusic(Gdx.files.internal("Illuminati.mp3"));
 	}
 
@@ -77,10 +76,10 @@ public class TLoT extends ApplicationAdapter {
 	public void Initialize() {
 		
 		// Draw walls
-		for (int a = 0; a < 320; a += 64)
+		/*for (int a = 0; a < 320; a += 64)
 		{
 			walls.add(new Wall(a, 0));			
-		}
+		}*/
 			
 	}
 	
@@ -292,10 +291,10 @@ public class TLoT extends ApplicationAdapter {
 			for (Blocks b : blocks)
 				b.Draw();
 			
-			for (Wall w : walls)
+			/*for (Wall w : walls)
 			{
 				w.Draw(universalXPos, universalYPos);
-			}
+			}*/
 			
 			hud.Draw(0, 0);
 			// draws HUD class
