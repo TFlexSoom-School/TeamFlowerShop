@@ -5,14 +5,10 @@ import java.util.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.Audio;
 
 public class TLoT extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -27,7 +23,7 @@ public class TLoT extends ApplicationAdapter {
 	Player player;
 	TitleScreen title;
 	boolean showTitleScreen;
-	ArrayList<ArrayList<String>> level;
+	Level level;
 	Music themeSong;
     int intialHealth=256;	
 	

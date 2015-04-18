@@ -3,6 +3,7 @@ package com.TeamFlowerShop.game;
 import java.awt.Point;
 import java.util.*;
 
+import com.TeamFlowerShop.game.Level.Pieces;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,9 +12,9 @@ public class Ground {
 	SpriteBatch batch;
 	ArrayList<GroundPiece> pieces;
 	Texture[] ground;
-	ArrayList<ArrayList<String>> currentLevel;
+	Level currentLevel;
 	
-	public Ground(ArrayList<ArrayList<String>> level)
+	public Ground(Level level)
 	{
 		batch = new SpriteBatch();
 		pieces = new ArrayList<GroundPiece>();
@@ -46,44 +47,24 @@ public class Ground {
 	}
 	
 	public GroundPiece getGroundPiece(int X, int Y)
-	{
-		int row = (Y / 128) + 6;
-		int collumn = (X / 128) + 6;
-		String pieceName = null;
-		
-		try
-		{
-			pieceName = currentLevel.get(row).get(collumn);
+	{	
+		Pieces pieceName = currentLevel.GetPieceName(X,Y);
+
+		switch(pieceName) {
+			case Wall:
+				return new GroundPiece(1, X, Y);
+			case EmptyGround:
+				return new GroundPiece(2, X, Y);
+			case EnemySpawnPoint:
+				return new GroundPiece(3, X, Y);
+			case HeroSpawnPoint:
+				return new GroundPiece(4, X, Y);
+			case GoalPoint:
+				return new GroundPiece(5, X, Y);
+			case Unknown: 
+				return new GroundPiece(6, X, Y);		
 		}
-		catch(IndexOutOfBoundsException e)
-		{
-			pieceName = "OutOfMapBounds";
-		}
-		
-		if(pieceName.equalsIgnoreCase("O"))
-		{
-			return new GroundPiece(1, X, Y);
-		}
-		if(pieceName.equalsIgnoreCase("X"))
-		{
-			return new GroundPiece(2, X, Y);
-		}
-		if(pieceName.equalsIgnoreCase("E"))
-		{
-			return new GroundPiece(3, X, Y);
-		}
-		if(pieceName.equalsIgnoreCase("H"))
-		{
-			return new GroundPiece(4, X, Y);
-		}
-		if(pieceName.equalsIgnoreCase("K"))
-		{
-			return new GroundPiece(5, X, Y);
-		}
-		else 
-		{
-			return new GroundPiece(6, X, Y);
-		}
+		return new GroundPiece(6, X, Y);
 	}
 	
 	public void UpdateRender(int UniversalXPos, int UniversalYPos)
