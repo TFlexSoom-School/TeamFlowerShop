@@ -19,7 +19,7 @@ public class Ground {
 		pieces = new ArrayList<GroundPiece>();
 		currentLevel = level;
 		ground = new Texture[] {new Texture("gsquare1w.png"), new Texture("gsquare2.png"), 
-			new Texture("gsquare3e.png"), new Texture("gsquare4h.png"), new Texture("gsquare1g.png")};
+			new Texture("gsquare3e.png"), new Texture("gsquare4h.png"), new Texture("gsquare1g.png"), new Texture("gsquare1.png")};
 	}
 	
 	int groundSquareDims = new Texture("gsquare1.png").getHeight();
@@ -40,15 +40,25 @@ public class Ground {
 				numY = i;
 				break;
 			}
-		return new Point(numX, numY);//returns the closest point whose XY coordinates are both divisible by
-									 //128 off the lower left hand side of the screen
+		//returns the closest point whose XY coordinates are both divisible by
+		//128 off the lower left hand side of the screen
+		return new Point(numX, numY);
 	}
 	
 	public GroundPiece getGroundPiece(int X, int Y)
 	{
 		int row = (X / 128) + 6;
 		int collumn = (Y / 128) + 6;
-		String pieceName = currentLevel.get(row).get(collumn);
+		String pieceName = null;
+		
+		try
+		{
+			pieceName = currentLevel.get(row).get(collumn);
+		}
+		catch(IndexOutOfBoundsException e)
+		{
+			pieceName = "OutOfMapBounds";
+		}
 		
 		if(pieceName.equalsIgnoreCase("O"))
 		{
@@ -72,7 +82,7 @@ public class Ground {
 		}
 		else 
 		{
-			return null;
+			return new GroundPiece(6, X, Y);
 		}
 	}
 	
