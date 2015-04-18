@@ -47,8 +47,8 @@ public class Ground {
 	
 	public GroundPiece getGroundPiece(int X, int Y)
 	{
-		int row = (X / 128) + 6;
-		int collumn = (Y / 128) + 6;
+		int row = (Y / 128) + 6;
+		int collumn = (X / 128) + 6;
 		String pieceName = null;
 		
 		try

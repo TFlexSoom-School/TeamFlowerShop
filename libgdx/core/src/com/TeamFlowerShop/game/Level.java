@@ -3,6 +3,8 @@ package com.TeamFlowerShop.game;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.badlogic.gdx.utils.Array;
+
 public class Level {
 
 	
@@ -38,9 +40,12 @@ public class Level {
 			levelString = level1;
 		}
 		String [] rows = levelString.split(";");
-		for(String r : rows)
+		//Cycle through rows in reverse so that maps can be edited in readible format
+		//while level class takes care putten the last row as the first because
+		//the bottom left corner is the origin.
+		for(int i=rows.length-1; i > -1; i-- )
 		{
-			ArrayList<String> blocks = new ArrayList<String>(Arrays.asList(r.split(" ")));
+			ArrayList<String> blocks = new ArrayList<String>(Arrays.asList(rows[i].split(" ")));
 			Rows.add(blocks);
 		}
 		
