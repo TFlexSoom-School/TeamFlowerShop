@@ -15,7 +15,14 @@ public class HUD {
 	int healthLeached = 0;
 	BitmapFont font =  new BitmapFont();
 	int health;
-	
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
 
 	Rectangle BarRect;
 		
@@ -30,8 +37,7 @@ public class HUD {
 		font = new BitmapFont();
 			
 		healthBar = new Texture("Health Bar.png");
-		health = intialHealth;
-		
+		setHealth(intialHealth);		
 	}
 	
 	public void Update(int gold, int kills, boolean attacked)

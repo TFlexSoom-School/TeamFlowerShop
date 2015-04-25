@@ -22,7 +22,9 @@ public class TLoT extends ApplicationAdapter {
 	HUD hud;
 	Player player;
 	TitleScreen title;
+	GameOverScreen lossScreen;
 	boolean showTitleScreen;
+	boolean showLossScreen;
 	Level level;
 	Music themeSong;
     int intialHealth=256;	
@@ -39,6 +41,7 @@ public class TLoT extends ApplicationAdapter {
 		player = new Player(); // The player class will hold the player information rather than here
 		title = new TitleScreen(universalXPos, universalYPos);
 		showTitleScreen = true;
+		showLossScreen = false;
 		level = Level.GetLevel(1);
 		gRenderer = new Ground(level);
 		themeSong = Gdx.audio.newMusic(Gdx.files.internal("Illuminati.mp3"));
@@ -255,7 +258,7 @@ public class TLoT extends ApplicationAdapter {
 		{
 			showTitleScreen = title.Update();
 		}
-
+		
 
 		if(!showTitleScreen)
 		{
@@ -271,6 +274,10 @@ public class TLoT extends ApplicationAdapter {
 		if(showTitleScreen)
 		{	
 			title.Draw(universalXPos, universalYPos);		
+		}
+		else if(hud.getHealth() <= 0)
+		{
+			lossScreen.Draw(universalXPos, universalYPos);
 		}
 		else
 		{
@@ -319,6 +326,4 @@ public class TLoT extends ApplicationAdapter {
 			}
 		}
 	}
-	
-	// WE HAVE BETTER WAYS OF HANDLING THIS //
 }

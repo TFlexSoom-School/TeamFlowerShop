@@ -18,13 +18,10 @@ SpriteBatch batch;
 		overScreen = new Texture("GameOverScreen.png");
 		batch = new SpriteBatch();	
 	}
+	
 	public boolean Update(int healthRemaining)
 	{
-		if(healthRemaining == 0 || healthRemaining < 0)
-		{
-			return true;
-		}
-		return false;
+		return true;
 	}
 	
 
