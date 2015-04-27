@@ -42,6 +42,7 @@ public class TLoT extends ApplicationAdapter {
 		title = new TitleScreen(universalXPos, universalYPos);
 		showTitleScreen = true;
 		showLossScreen = false;
+		lossScreen = new GameOverScreen(universalXPos, universalYPos);
 		level = Level.GetLevel(1);
 		gRenderer = new Ground(level);
 		themeSong = Gdx.audio.newMusic(Gdx.files.internal("Illuminati.mp3"));

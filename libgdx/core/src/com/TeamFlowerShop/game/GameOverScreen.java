@@ -1,9 +1,12 @@
 package com.TeamFlowerShop.game;
+
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+
 public class GameOverScreen {
-SpriteBatch batch;
+	SpriteBatch batch;
 	
 	Texture overScreen;
 
