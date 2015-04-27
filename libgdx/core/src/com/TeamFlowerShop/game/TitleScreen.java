@@ -16,6 +16,8 @@ public class TitleScreen {
 	Rectangle startButtonRect;
 	float MousePosY;
 	float posX, posY;
+	float buttonX;
+	float buttonY;
 	
 	// Initialization for the wall
 	public TitleScreen (float UniversalXPos, float UniversalYPos)
@@ -24,7 +26,10 @@ public class TitleScreen {
 		posY = UniversalYPos;
 		titleBackdrop = new Texture("Title.png");
 		startButton = new Texture("StartA.png");
-		startButtonRect = new Rectangle(((Gdx.graphics.getWidth()/64)*20), (Gdx.graphics.getHeight()/48)*20, startButton.getWidth(), startButton.getHeight());
+		buttonX = (Gdx.graphics.getWidth() / 2) - (startButton.getWidth() / 2);
+		buttonY = (Gdx.graphics.getHeight() / 2) - (startButton.getHeight() / 2);
+
+		startButtonRect = new Rectangle(buttonX, buttonY, startButton.getWidth(), startButton.getHeight());
 		
 		batch = new SpriteBatch();	
 	}
@@ -56,8 +61,8 @@ public class TitleScreen {
 	{
 		batch.begin();
 		
-		batch.draw(titleBackdrop, ux , uy);
-		batch.draw(startButton, ((Gdx.graphics.getWidth()/64)*20),  ((Gdx.graphics.getHeight()/48)*20));
+		batch.draw(titleBackdrop, ux , uy, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		batch.draw(startButton, buttonX,  buttonY);
 		
 		batch.end();
 		

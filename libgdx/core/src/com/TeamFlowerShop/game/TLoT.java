@@ -9,6 +9,8 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class TLoT extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -31,8 +33,7 @@ public class TLoT extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		
+		batch = new SpriteBatch();		
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<Enemy>();
 		blocks = new ArrayList<Blocks>();
@@ -47,7 +48,16 @@ public class TLoT extends ApplicationAdapter {
 		gRenderer = new Ground(level);
 		themeSong = Gdx.audio.newMusic(Gdx.files.internal("Illuminati.mp3"));
 	}
+	
 
+	
+	@Override
+	public void resize(int width, int height)
+	{
+		title = new TitleScreen(universalXPos, universalYPos);
+		player = new Player();
+	}
+	
 	public enum MoveDirection {
 		LEFT, RIGHT, UP, DOWN
 	}
@@ -252,6 +262,8 @@ public class TLoT extends ApplicationAdapter {
 		// END MOUSE GENERATED WALLS CONTIUNUED //
 	}
 	
+
+	
 	@Override
 	public void render ()
 	{
@@ -266,7 +278,6 @@ public class TLoT extends ApplicationAdapter {
 			Update();
 		}
 		
-				
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//HERE STARTS ALL THE DRAW CODE. ENGINE ONLY HAS ONE LOOP METHOD, AND IT IS RENDER.
