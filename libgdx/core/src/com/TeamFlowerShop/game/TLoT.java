@@ -9,8 +9,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class TLoT extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -39,13 +37,13 @@ public class TLoT extends ApplicationAdapter {
 		blocks = new ArrayList<Blocks>();
 		walls = new ArrayList<Wall>();
 		hud = new HUD(0, 1, intialHealth);
-		player = new Player(); // The player class will hold the player information rather than here
 		title = new TitleScreen(universalXPos, universalYPos);
+		lossScreen = new GameOverScreen(universalXPos, universalYPos);
 		showTitleScreen = true;
 		showLossScreen = false;
-		lossScreen = new GameOverScreen(universalXPos, universalYPos);
 		level = Level.GetLevel(1);
 		gRenderer = new Ground(level);
+		player = new Player(gRenderer, level); // The player class will hold the player information rather than here
 		themeSong = Gdx.audio.newMusic(Gdx.files.internal("Illuminati.mp3"));
 	}
 	
@@ -55,7 +53,7 @@ public class TLoT extends ApplicationAdapter {
 	public void resize(int width, int height)
 	{
 		title = new TitleScreen(universalXPos, universalYPos);
-		player = new Player();
+		player = new Player(gRenderer, level);
 	}
 	
 	public enum MoveDirection {
@@ -272,7 +270,6 @@ public class TLoT extends ApplicationAdapter {
 			showTitleScreen = title.Update();
 		}
 		
-
 		if(!showTitleScreen)
 		{
 			Update();
@@ -281,8 +278,8 @@ public class TLoT extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//HERE STARTS ALL THE DRAW CODE. ENGINE ONLY HAS ONE LOOP METHOD, AND IT IS RENDER.
-		gRenderer.Draw(universalXPos, universalYPos);
-			
+		
+
 		if(showTitleScreen)
 		{	
 			title.Draw(universalXPos, universalYPos);		
@@ -293,6 +290,7 @@ public class TLoT extends ApplicationAdapter {
 		}
 		else
 		{
+			gRenderer.Draw(universalXPos, universalYPos);	
 			for (Bullet b : bullets){//draws each bullet in the list of bullets
 				b.Draw();
 			}
