@@ -58,6 +58,9 @@ public class TLoT extends ApplicationAdapter {
 	{
 		title = new TitleScreen(universalXPos, universalYPos);
 		player = new Player(gRenderer, level);
+		gRenderer = new Ground(level);
+		int health = hud.getHealth();
+		hud = new HUD(0, 1, health);
 	}
 	
 	public enum MoveDirection {
