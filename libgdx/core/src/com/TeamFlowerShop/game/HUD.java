@@ -46,10 +46,10 @@ public class HUD {
 	
 	public void Update(int gold, int kills, boolean attacked)
 	{
-		if (attacked)
-		{
-			health -= 32;
-		}
+//		if (attacked)
+//		{
+//			health -= 32;
+//		}
 
 		printedKills = "" + kills;
 	}

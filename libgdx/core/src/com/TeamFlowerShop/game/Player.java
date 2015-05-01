@@ -6,9 +6,13 @@ import java.util.ArrayList;
 import com.TeamFlowerShop.game.Level.Pieces;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Player {
 
@@ -82,6 +86,8 @@ public class Player {
 		
 		rotation = mouseAngle; // make the player face the cursor
 	}
+
+	private ShapeRenderer shapeRenderer = new ShapeRenderer();
 	
 	public void Draw ()
 	{
@@ -93,6 +99,10 @@ public class Player {
 		batch.begin();//draw the player
 		batch.draw(img_1, playerX, playerY, originX, originY, img.getWidth(), img.getHeight(), 1, 1, (int)Math.toDegrees(rotation) + 90);
 		batch.end();
+		shapeRenderer.begin(ShapeType.Line);
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.rect(potentialRect.x, potentialRect.y, potentialRect.width, potentialRect.height);
+        shapeRenderer.end();	
 	}
 	
 	char a = 1;
@@ -118,6 +128,8 @@ public class Player {
 		return null;
 	}
 	
+	private Rectangle potentialRect;
+	
 	public void HandlePlayerMovement ()
 	{
 		velX = 0; 
@@ -133,23 +145,27 @@ public class Player {
 		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
 			velX += speed;
 		
-		int potentialX = (int)playerX + posX + velX;
-		if(velX > 0)
-			potentialX += (img.getWidth() / 2);
-		else
-			potentialX -= (img.getWidth() / 2);
-		
-		int potentialY = (int)playerY + posY + velY;
-		if(velY > 0)
-			potentialY += (img.getHeight() / 2);
-		else
-			potentialY -= (img.getHeight() / 2);
+		int potentialX = (int)playerX + velX;
+//		if(velX > 0)
+//			potentialX += (img.getWidth() / 2);
+//		else
+//			potentialX -= (img.getWidth() / 2);
+//		
+		int potentialY = (int)playerY + velY;
+//		if(velY > 0)
+//			potentialY += (img.getHeight() / 2);
+//		else
+//			potentialY -= (img.getHeight() / 2);
 
-		if(currentLevel.GetPieceName(potentialX, potentialY) != Pieces.Wall)
+		potentialRect = new Rectangle(potentialX+posX, potentialY+posY, img.getHeight(), img.getWidth());
+
+		if(!currentLevel.OverlapsPieceType(potentialRect, Pieces.Wall))
 		{
 			posX += velX;
 			posY += velY;
 		}
+		potentialRect = new Rectangle(potentialX, potentialY, img.getHeight(), img.getWidth());
+		
 		/*else if(currentLevel.GetPieceName(potentialX, (int)playerY) != Pieces.Wall)
 		{
 			posX += velX;

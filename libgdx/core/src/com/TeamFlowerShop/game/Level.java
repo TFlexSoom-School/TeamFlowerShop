@@ -3,6 +3,8 @@ package com.TeamFlowerShop.game;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.badlogic.gdx.math.Rectangle;
+
 public class Level {
 
 	
@@ -34,6 +36,7 @@ public class Level {
 	private ArrayList<ArrayList<String>> Rows = new ArrayList<ArrayList<String>>();
 	private int originXOffset = 5;
 	private int originYOffset = 5;
+	private int pieceSize = 128;
 	
 	public static Level GetLevel(int levelNumber)
 	{
@@ -59,10 +62,44 @@ public class Level {
 		}		
 	}
 	
+	public boolean OverlapsPieceType(Rectangle r, Pieces type)
+	{
+		//bottom left
+		if(GetPieceName(r.x, r.y) == type)
+		{
+			return true;
+		}
+		
+		//bottom right
+		if(GetPieceName((r.x + r.width), r.y) == type)
+		{
+			return true;
+		}
+		
+		//top left
+		if(GetPieceName(r.x, (r.y + r.height)) == type)
+		{
+			return true;
+		}
+		
+		//top right
+		if(GetPieceName((r.x + r.width), (r.y + r.height)) == type)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public Pieces GetPieceName(float X, float Y)
+	{
+		return GetPieceName((int)X, (int)Y);
+	}
+	
 	public Pieces GetPieceName(int X, int Y)
 	{
-		int row = (Y / 128) + originYOffset;
-		int collumn = (X / 128) + originXOffset;
+		int row = (Y / pieceSize) + originYOffset;
+		int collumn = (X / pieceSize) + originXOffset;
 		String pieceName = null;
 		
 		try
