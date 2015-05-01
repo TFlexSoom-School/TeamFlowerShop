@@ -50,7 +50,7 @@ public class Level {
 		}
 		String [] rows = levelString.split(";");
 		//Cycle through rows in reverse so that maps can be edited in readible format
-		//while level class takes care putten the last row as the first because
+		//while level class takes care putting the last row as the first because
 		//the bottom left corner is the origin.
 		for(int i=rows.length-1; i > -1; i-- )
 		{

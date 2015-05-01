@@ -31,9 +31,7 @@ public class GameOverScreen {
 	public void Draw (float ux, float uy)
 	{
 		batch.begin();
-		
-		batch.draw(overScreen, ux , uy);
-		
+		batch.draw(overScreen, 0 , 0);
 		batch.end();
 		
 	}

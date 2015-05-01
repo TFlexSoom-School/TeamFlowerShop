@@ -41,7 +41,7 @@ public class TLoT extends ApplicationAdapter {
 		blocks = new ArrayList<Blocks>();
 		walls = new ArrayList<Wall>();
 		hud = new HUD(0, 1, intialHealth);
-		player = new Player(); // The player class will hold the player information rather than here
+		player = new Player(gRenderer, level); // The player class will hold the player information rather than here
 		title = new TitleScreen(universalXPos, universalYPos);
 		showTitleScreen = true;
 		showLossScreen = false;
@@ -57,10 +57,7 @@ public class TLoT extends ApplicationAdapter {
 	public void resize(int width, int height)
 	{
 		title = new TitleScreen(universalXPos, universalYPos);
-		player = new Player();
-		gRenderer = new Ground(level);
-		int health = hud.getHealth();
-		hud = new HUD(0, 1, health);
+		player = new Player(gRenderer, level);
 	}
 	
 	public enum MoveDirection {
