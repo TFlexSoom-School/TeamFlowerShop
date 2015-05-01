@@ -6,7 +6,9 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -30,7 +32,7 @@ public class TLoT extends ApplicationAdapter {
 	Level level;
 	Music themeSong;
     int intialHealth=256;	
-	
+    
 	@Override
 	public void create () {
 		batch = new SpriteBatch();		
@@ -46,7 +48,7 @@ public class TLoT extends ApplicationAdapter {
 		lossScreen = new GameOverScreen(universalXPos, universalYPos);
 		level = Level.GetLevel(1);
 		gRenderer = new Ground(level);
-		themeSong = Gdx.audio.newMusic(Gdx.files.internal("Illuminati.mp3"));
+		themeSong = Gdx.audio.newMusic(Gdx.files.internal("Illuminati.mp3"));		
 	}
 	
 
@@ -315,8 +317,8 @@ public class TLoT extends ApplicationAdapter {
 				w.Draw(universalXPos, universalYPos);
 			}*/
 			
-			hud.Draw(0, 0);
 			// draws HUD class
+			hud.Draw(0, 0);
 			
 			timer += 1;
 		}

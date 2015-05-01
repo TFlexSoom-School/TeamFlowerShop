@@ -1,5 +1,6 @@
 package com.TeamFlowerShop.game;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,8 +14,8 @@ public class HUD {
 	float barX, barY;
 	double universalXPos, universalYPos;
 	int healthLeached = 0;
-	BitmapFont font =  new BitmapFont();
 	int health;
+    private BitmapFont font;
 
 	public int getHealth() {
 		return health;
@@ -37,7 +38,10 @@ public class HUD {
 		font = new BitmapFont();
 			
 		healthBar = new Texture("Health Bar.png");
-		setHealth(intialHealth);		
+		setHealth(intialHealth);	
+        font = new BitmapFont();
+        font.setColor(Color.RED);
+        font.setScale(2);		
 	}
 	
 	public void Update(int gold, int kills, boolean attacked)
@@ -60,5 +64,9 @@ public class HUD {
 		font.draw(batch, printedKills, (float) ux, (float) uy, 10, 10);
 		
 		batch.end();
+		batch.begin();
+		font.draw(batch, "00", 200, 200);
+		batch.end();
+		
 	}
 }
