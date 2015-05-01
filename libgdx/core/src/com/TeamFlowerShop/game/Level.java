@@ -8,21 +8,28 @@ import com.badlogic.gdx.math.Rectangle;
 public class Level {
 
 	
-	public static String level1 = "O O O O O O O O O O O O O O O;"
-				  		 		+ "O E X O O X X X X X X X O O O;"
-				  		 		+ "O E X X O X X O O O O O O E O;"
-				  		 		+ "O X X X O X X X X X X O X X O;"
-				  		 		+ "X O X X O X X O O X X O X X O;"
-				  		 		+ "X O X X K O X X O X X X X X O;"
-				  		 		+ "X O X X O O O X O X X X X E O;"
-				  		 		+ "X O X X X X X X O X X O O O O;"
-				  		 		+ "X O E X X X O H O X X O E E O;"
-				  		 		+ "X O O O O O O X O X X O X X O;"
-				  		 		+ "X X X X X X O X O O X X X X O;"
-				  		 		+ "O O O O O O X X X O O O O O O;"
-				  		 		+ "O E X X X X X X X O X X X E O;"
-				  		 		+ "O E X X X X X X X X X X X E O;"
-				  		 		+ "O O O O O O O O O O O O O O O;";
+	public static String level1 = "X X X X X X X X X X X X X X X X X X X X X X X X X X X X X;"
+				  		 		+ "X E O O X O O O O O O O O O O O O O O O O X O O O O E E X;"
+				  		 		+ "X O O O X O O O O O O O O O O O O O O O O X O O O O O O X;"
+				  		 		+ "X O O O X O O X X X X X X X X X X O O O O O O O X O O O X;"
+				  		 		+ "X O O X X O O X O O O O O O O O X E E O O O O O X K O O X;"
+				  		 		+ "X O O O X O O X O O O O O O O O X X X X X X X X X X O O X;"
+				  		 		+ "X O O O O O O X O O O O O O O O X E O O O X O E E X O O X;"
+				  		 		+ "X O O O O O O X O O O E O O O O X O O O O X O O O X O O X;"
+				  		 		+ "X O O O X O O X O O O O O O O O X O O O O O O O O X O O X;"
+				  		 		+ "X E O O X O O X O O O O O O O O X O O O O O O O O X O O X;"
+				  		 		+ "X X X X X O O X X X X O O X X X X O O O O X O O O X O O X;"
+				  		 		+ "X O O O O O O O E X O O O O X O O O O O X X O O O X O O X;"
+				  		 		+ "X O O O O O O O O O O H O O O O O O O E X X O O O X O O X;"
+				  		 		+ "X O O O O O O O O O O O O O O O O X X X X X O O O X O O X;"
+				  		 		+ "X O O O O O O O O X O O O O X O O X O E E X O O O X O O X;"
+				  		 		+ "X O O X X X X O O X X O O X X O O X O O O X O O O X O O X;"
+				  		 		+ "X O O X O O O O O O X O O O X O O O O O O X O O O X O O X;"
+				  		 		+ "X E E X O O O O O O X O O O X O O O O O O X O O O X O O X;"
+				  		 		+ "X X X X O O O O O O O O O O X X X X X X X X X O O X O O X;"
+				  		 		+ "X X X X O O O O O O O O O O O O O O X E O O O O O O O O X;"
+				  		 		+ "X X X X E E O O O O O O O O O O E E X E O O O O O O O O X;"
+				  		 		+ "X X X X X X X X X X X X X X X X X X X X X X X X X X X X X;";
 	
 	public enum Pieces{
 		Wall,
@@ -52,7 +59,7 @@ public class Level {
 			levelString = level1;
 		}
 		String [] rows = levelString.split(";");
-		//Cycle through rows in reverse so that maps can be edited in readible format
+		//Cycle through rows in reverse so that maps can be edited in readable format
 		//while level class takes care putting the last row as the first because
 		//the bottom left corner is the origin.
 		for(int i=rows.length-1; i > -1; i-- )
@@ -111,11 +118,11 @@ public class Level {
 			pieceName = "OutOfMapBounds";
 		}
 		
-		if(pieceName.equalsIgnoreCase("O"))
+		if(pieceName.equalsIgnoreCase("X"))
 		{
 			return Pieces.Wall;
 		}
-		if(pieceName.equalsIgnoreCase("X"))
+		if(pieceName.equalsIgnoreCase("O"))
 		{
 			return Pieces.EmptyGround;
 		}

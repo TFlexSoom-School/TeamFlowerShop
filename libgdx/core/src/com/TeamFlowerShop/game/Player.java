@@ -26,6 +26,7 @@ public class Player {
 	int width;
 	int height;
 	Ground ground;
+	boolean diagMode = false;
 
 	// Draw utility variables
 	float playerX;
@@ -99,10 +100,13 @@ public class Player {
 		batch.begin();//draw the player
 		batch.draw(img_1, playerX, playerY, originX, originY, img.getWidth(), img.getHeight(), 1, 1, (int)Math.toDegrees(rotation) + 90);
 		batch.end();
-		shapeRenderer.begin(ShapeType.Line);
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.rect(potentialRect.x, potentialRect.y, potentialRect.width, potentialRect.height);
-        shapeRenderer.end();	
+		if(diagMode)
+		{
+			shapeRenderer.begin(ShapeType.Line);
+	        shapeRenderer.setColor(Color.RED);
+	        shapeRenderer.rect(potentialRect.x, potentialRect.y, potentialRect.width, potentialRect.height);
+	        shapeRenderer.end();
+		}
 	}
 	
 	char a = 1;

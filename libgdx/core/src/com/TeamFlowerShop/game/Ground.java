@@ -2,6 +2,7 @@ package com.TeamFlowerShop.game;
 
 import java.awt.Point;
 import java.util.*;
+import java.util.ArrayList;
 
 import com.TeamFlowerShop.game.Level.Pieces;
 import com.badlogic.gdx.Gdx;
@@ -56,7 +57,7 @@ public class Ground {
 			case EmptyGround:
 				return new GroundPiece(2, X, Y);
 			case EnemySpawnPoint:
-				return new GroundPiece(3, X, Y);
+				return new GroundPiece(3, X, Y);				
 			case HeroSpawnPoint:
 				return new GroundPiece(4, X, Y);
 			case GoalPoint:

@@ -26,7 +26,7 @@ public class HUD {
 	}
 
 	Rectangle BarRect;
-		
+	private int Kills;
 	String printedKills = "Hello World";
 	
 	boolean X, Y;
@@ -41,17 +41,19 @@ public class HUD {
 		setHealth(intialHealth);	
         font = new BitmapFont();
         font.setColor(Color.RED);
-        font.setScale(2);		
+        font.setScale(2);	
+        Kills = kills;
 	}
 	
 	public void Update(int gold, int kills, boolean attacked)
 	{
-//		if (attacked)
-//		{
-//			health -= 32;
-//		}
+		if (attacked)
+		{
+			health -= 32;
+		}
 
-		printedKills = "" + kills;
+		//Kills += kills;
+		printedKills = "" + Kills;
 	}
 	
 	public void Draw(float ux, float uy)
@@ -61,11 +63,7 @@ public class HUD {
 		
 		batch.end();
 		batch.begin();
-		font.draw(batch, printedKills, (float) ux, (float) uy, 10, 10);
-		
-		batch.end();
-		batch.begin();
-		font.draw(batch, "00", 200, 200);
+		font.draw(batch, printedKills, 0, 65);
 		batch.end();
 		
 	}
