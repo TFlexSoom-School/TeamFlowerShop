@@ -1,7 +1,6 @@
 package com.TeamFlowerShop.game;
 
 import java.awt.Point;
-import java.util.*;
 import java.util.ArrayList;
 
 import com.TeamFlowerShop.game.Level.Pieces;
@@ -75,7 +74,8 @@ public class Ground {
 		
 		while (numY < UniversalYPos + Gdx.graphics.getHeight())
 		{
-			int tempX = numX; // Adding temporary variable otherwise only the outskirts get filled in
+			// Adding temporary variable otherwise only the outskirts get filled in
+			int tempX = numX; 
 			while (tempX < UniversalXPos + Gdx.graphics.getWidth())
 			{
 				if (!Contains(new GroundPiece(1, tempX, numY), pieces))
@@ -90,7 +90,8 @@ public class Ground {
 	
 	public void Update(int UniversalXPos, int UniversalYPos)
 	{
-		UpdateRender(UniversalXPos, UniversalYPos);//updaterender adds pieces if they are on the screen.
+		//update render adds pieces if they are on the screen.
+		UpdateRender(UniversalXPos, UniversalYPos);
 		
 		for (GroundPiece gp : pieces)
 		{

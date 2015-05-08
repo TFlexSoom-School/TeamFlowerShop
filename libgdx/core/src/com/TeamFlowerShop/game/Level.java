@@ -105,8 +105,26 @@ public class Level {
 	
 	public Pieces GetPieceName(int X, int Y)
 	{
-		int row = (Y / pieceSize) + originYOffset;
-		int collumn = (X / pieceSize) + originXOffset;
+		int row, collumn;
+		
+		if((Y % pieceSize) != 0 && Y < 0)
+		{
+			row = ((Y - (pieceSize + (Y % pieceSize))) / pieceSize) + originYOffset;
+		}
+		else
+		{
+			row = (Y / pieceSize) + originYOffset;
+		}
+
+		if((X % pieceSize) != 0 && X < 0)
+		{
+			collumn = ((X - (pieceSize + (X % pieceSize))) / pieceSize) + originXOffset;
+		}
+		else
+		{
+			collumn = (X / pieceSize) + originXOffset;
+		}
+		
 		String pieceName = null;
 		
 		try
