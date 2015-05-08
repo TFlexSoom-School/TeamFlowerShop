@@ -27,7 +27,9 @@ public class Player {
 	int height;
 	Ground ground;
 	boolean diagMode = false;
-
+	int  buttonsP = 0;
+	boolean diagnol = false;
+	
 	// Draw utility variables
 	float playerX;
 	float playerY;
@@ -73,8 +75,14 @@ public class Player {
 		setCurrentLevel(currentLevel);
 		setGround(ground);
 		
-		speed = 10;
-		
+		if(diagnol)
+		{
+			speed = 5;
+		}
+		else
+		{
+			speed = 10;
+		}
 		img = new Texture("Player.png");
 		img_1 = new TextureRegion(img, 0, 0, img.getWidth(), img.getHeight());
 		playerX = (Gdx.graphics.getWidth() / 2) - (img.getWidth() / 2);
@@ -141,13 +149,35 @@ public class Player {
 		
 		// this big block handles movement
 		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
+		{
 			velY += speed;
-		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN))
+			buttonsP += buttonsP + 1;
+		}
+		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN))	
+		{
 			velY -= speed;
+			buttonsP += buttonsP + 1;
+		}
 		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
+		{
 			velX -= speed;
+			buttonsP += buttonsP + 1;
+		}
 		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
+		{
 			velX += speed;
+			buttonsP += buttonsP + 1;
+		}
+		if(buttonsP >= 2)
+		{
+			diagnol = true;
+			buttonsP = 0;
+		}
+		else
+		{
+			diagnol = false;
+			buttonsP = 0;
+		}
 		
 		int potentialX = (int)playerX + velX;
 //		if(velX > 0)
