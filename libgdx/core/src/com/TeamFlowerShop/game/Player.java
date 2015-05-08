@@ -117,29 +117,6 @@ public class Player {
 		}
 	}
 	
-	char a = 1;
-	
-	public CollisionDirection CheckWallCollision (Wall wall)
-	{
-		// Check if player left bound is touching wall
-		if(posX < wall.posX + wall.wallTex.getWidth() && 
-		   posY > wall.posY + wall.wallTex.getHeight() &&
-		   posY + img.getHeight() < wall.posY)
-		{
-			return CollisionDirection.LEFT;
-		}
-		
-		// Check if player right bound is touching wall
-		if(posX + img.getWidth() < wall.posX && 
-		   posY > wall.posY + wall.wallTex.getHeight() &&
-		   posY + img.getHeight() < wall.posY)
-		{
-			return CollisionDirection.RIGHT;
-		}
-		
-		return null;
-	}
-	
 	private Rectangle potentialRect;
 	
 	public void HandlePlayerMovement ()
