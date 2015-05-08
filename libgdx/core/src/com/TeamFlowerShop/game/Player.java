@@ -175,6 +175,7 @@ public class Player {
 		{
 			posY += velY;
 		}
-		//potentialRect = new Rectangle(potentialX, potentialY, img.getHeight(), img.getWidth());
+		//Exists for diagnostic drawing only, probably should be wrapped in an if statement
+		potentialRect = new Rectangle(potentialX, potentialY, img.getHeight(), img.getWidth());
 	}
 }
