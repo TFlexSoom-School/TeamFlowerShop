@@ -157,16 +157,8 @@ public class Player {
 		}
 		
 		int potentialX = (int)playerX + velX;
-//		if(velX > 0)
-//			potentialX += (img.getWidth() / 2);
-//		else
-//			potentialX -= (img.getWidth() / 2);
-//		
+
 		int potentialY = (int)playerY + velY;
-//		if(velY > 0)
-//			potentialY += (img.getHeight() / 2);
-//		else
-//			potentialY -= (img.getHeight() / 2);
 
 		potentialRect = new Rectangle(potentialX+posX, potentialY+posY, img.getHeight(), img.getWidth());
 
@@ -174,16 +166,15 @@ public class Player {
 		{
 			posX += velX;
 			posY += velY;
-		}
-		potentialRect = new Rectangle(potentialX, potentialY, img.getHeight(), img.getWidth());
-		
-		/*else if(currentLevel.GetPieceName(potentialX, (int)playerY) != Pieces.Wall)
+		}	
+		else if(!currentLevel.OverlapsPieceType(new Rectangle(potentialX+posX, playerY+posY, img.getHeight(), img.getWidth()), Pieces.Wall))
 		{
 			posX += velX;
 		}
-		else if(currentLevel.GetPieceName((int)playerX, potentialY) != Pieces.Wall)
+		else if(!currentLevel.OverlapsPieceType(new Rectangle(playerX+posX, potentialY+posY, img.getHeight(), img.getWidth()), Pieces.Wall))
 		{
 			posY += velY;
-		}*/
+		}
+		//potentialRect = new Rectangle(potentialX, potentialY, img.getHeight(), img.getWidth());
 	}
 }
