@@ -71,6 +71,7 @@ public class TLoT extends ApplicationAdapter {
 	double rotation;
 	
 	int timer = 0;
+	int spawnTimer = 200;
 	
 	boolean lastFrameRMD = false;
 	boolean thisFrameRMD = false;
@@ -97,6 +98,10 @@ public class TLoT extends ApplicationAdapter {
 	
 	// Update function to run every update. This is called in the render function
 	public void Update() {
+		if (Gdx.input.isButtonPressed(Input.Keys.ESCAPE))
+		{
+			//spawnTimer = 1;
+		}//enemeesoeoeoejrrirjfsoeiroekoeoejgorjrogjroTtristaltav
 		playerRect = new Rectangle((Gdx.graphics.getWidth()  / 2) - (player.img.getWidth()  / 2), 
 								   (Gdx.graphics.getHeight() / 2) - (player.img.getHeight() / 2), 
 								    player.img.getWidth(), player.img.getHeight());
@@ -141,7 +146,7 @@ public class TLoT extends ApplicationAdapter {
 		
 		// ENEMY SPAWN CODE
 		
-		if (timer % 200 == 0)//spawns an enemy every 200 updates NEED TO IMPROVE: random spawning, enemy hardness level, rectangles that are rotated? :3 pls?
+		if (timer % spawnTimer == 0)//spawns an enemy every 200 updates NEED TO IMPROVE: random spawning, enemy hardness level, rectangles that are rotated? :3 pls?
 			enemies.add(new Enemy(universalXPos, universalYPos));
 		
 		// END ENEMY SPAWN CODE
