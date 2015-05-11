@@ -98,10 +98,11 @@ public class TLoT extends ApplicationAdapter {
 	
 	// Update function to run every update. This is called in the render function
 	public void Update() {
-		if (Gdx.input.isButtonPressed(Input.Keys.ESCAPE))
+		if (Gdx.input.isButtonPressed(Input.Keys.DEL) && timer > 100)
 		{
-			//spawnTimer = 1;
-		}//enemeesoeoeoejrrirjfsoeiroekoeoejgorjrogjroTtristaltav
+			spawnTimer = 1;
+		}
+		//enemeesoeoeoejrrirjfsoeiroekoeoejgorjrogjroTtristaltav
 		playerRect = new Rectangle((Gdx.graphics.getWidth()  / 2) - (player.img.getWidth()  / 2), 
 								   (Gdx.graphics.getHeight() / 2) - (player.img.getHeight() / 2), 
 								    player.img.getWidth(), player.img.getHeight());
