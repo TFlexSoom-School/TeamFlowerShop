@@ -56,14 +56,14 @@ public class HUD {
 		printedKills = "" + Kills;
 	}
 	
-	public void Draw(float ux, float uy)
+	public void Draw(float ux, float uy, int scoreX, int scoreY)
 	{	
 		batch.begin();
 		batch.draw(healthBar, (float) ux, (float) uy, health, healthBar.getHeight());
 		
 		batch.end();
 		batch.begin();
-		font.draw(batch, printedKills, 0, 65);
+		font.draw(batch, printedKills, scoreX, scoreY);
 		batch.end();
 		
 	}

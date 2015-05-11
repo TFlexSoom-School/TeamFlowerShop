@@ -301,6 +301,7 @@ public class TLoT extends ApplicationAdapter {
 		else if(hud.getHealth() <= 0)
 		{
 			lossScreen.Draw(universalXPos, universalYPos);
+			hud.Draw(universalXPos, universalYPos, (Gdx.graphics.getWidth()*2)/3, Gdx.graphics.getHeight()/2);
 		}
 		else
 		{
@@ -324,7 +325,7 @@ public class TLoT extends ApplicationAdapter {
 			}*/
 			
 			// draws HUD class
-			hud.Draw(0, 0);
+			hud.Draw(0, 0, 0, 65);
 			
 			timer += 1;
 		}
