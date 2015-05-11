@@ -37,7 +37,7 @@ public class TLoT extends ApplicationAdapter {
 		enemies = new ArrayList<Enemy>();
 		blocks = new ArrayList<Blocks>();
 		walls = new ArrayList<Wall>();
-		hud = new HUD(0, 1, intialHealth);
+		hud = new HUD(0, intialHealth);
 		player = new Player(gRenderer, level); // The player class will hold the player information rather than here
 		title = new TitleScreen(universalXPos, universalYPos);
 		showTitleScreen = true;
@@ -58,7 +58,7 @@ public class TLoT extends ApplicationAdapter {
 		player = new Player(gRenderer, level);
 		gRenderer = new Ground(level);
 		int health = hud.getHealth();
-		hud = new HUD(0, 1, health);
+		hud = new HUD(0, health);
 	}
 	
 	public enum MoveDirection {
@@ -100,7 +100,7 @@ public class TLoT extends ApplicationAdapter {
 	
 	// Update function to run every update. This is called in the render function
 	public void Update() {
-		
+
 		playerRect = new Rectangle((Gdx.graphics.getWidth()  / 2) - (player.img.getWidth()  / 2), 
 								   (Gdx.graphics.getHeight() / 2) - (player.img.getHeight() / 2), 
 								    player.img.getWidth(), player.img.getHeight());
@@ -115,10 +115,7 @@ public class TLoT extends ApplicationAdapter {
 		{			
 			spawnTimer = 1;
 		}
-		else
-		{
-			spawnTimer = 50;
-		}
+
 		//enemeesoeoeoejrrirjfsoeiroekoeoejgorjrogjroTtristaltav
 		// Code to deal with the walls made with the right mouse click. I'll leave this here for now.
 		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
@@ -198,6 +195,7 @@ public class TLoT extends ApplicationAdapter {
 					{
 						if (bullets.get(i).bulletRect.overlaps(enemies.get(j).enemyRect))
 						{///////////////////////////////////////fix broken collision code
+							hud.Update(1, false);
 							bullets.remove(i);
 							enemies.remove(j);
 							break; // This just fixes this.
@@ -213,13 +211,13 @@ public class TLoT extends ApplicationAdapter {
 			{
 				if(enemies.get(i).enemyRect.overlaps(playerRect))
 				{
-					hud.Update(0, 1, true);
+					hud.Update(0, true);
 					enemies.remove(i);
 					break;
 				}
 				else
 				{
-					hud.Update(0, 1, false);
+					hud.Update(0,false);
 				}
 			}
 		}

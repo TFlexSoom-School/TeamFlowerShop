@@ -27,10 +27,10 @@ public class HUD {
 
 	Rectangle BarRect;
 	private int Kills;
-	String printedKills = "Hello World";
+	String printedKills = "";
 	
 	boolean X, Y;
-	public HUD(int gold, int kills, int intialHealth)
+	public HUD(int kills, int intialHealth)
 	// Will potentially hold all of the Heads up display information including Player health, Kills,
 	// and any other necessities.
 	{
@@ -45,14 +45,14 @@ public class HUD {
         Kills = kills;
 	}
 	
-	public void Update(int gold, int kills, boolean attacked)
+	public void Update(int kills, boolean attacked)
 	{
 		if (attacked)
 		{
 			health -= 32;
 		}
 
-		//Kills += kills;
+		Kills += kills;
 		printedKills = "" + Kills;
 	}
 	
