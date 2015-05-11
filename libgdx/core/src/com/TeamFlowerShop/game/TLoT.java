@@ -56,9 +56,12 @@ public class TLoT extends ApplicationAdapter {
 	{
 		title = new TitleScreen(universalXPos, universalYPos);
 		player = new Player(gRenderer, level);
+		level.setOriginXOffset(12-((Gdx.graphics.getWidth()/128)/2));
+		level.setOriginYOffset(9-((Gdx.graphics.getHeight()/128)/2));
 		gRenderer = new Ground(level);
 		int health = hud.getHealth();
-		hud = new HUD(0, health);
+		int kills = hud.getKills();
+		hud = new HUD(kills, health);
 	}
 	
 	public enum MoveDirection {
@@ -90,11 +93,7 @@ public class TLoT extends ApplicationAdapter {
 	// I will be using it to spawn walls
 	public void Initialize() {
 		
-		// Draw walls
-		/*for (int a = 0; a < 320; a += 64)
-		{
-			walls.add(new Wall(a, 0));			
-		}*/
+		
 			
 	}
 	
@@ -118,11 +117,11 @@ public class TLoT extends ApplicationAdapter {
 
 		//enemeesoeoeoejrrirjfsoeiroekoeoejgorjrogjroTtristaltav
 		// Code to deal with the walls made with the right mouse click. I'll leave this here for now.
-		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
+		/*if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
 			thisFrameRMD = true;
 		else
 			thisFrameRMD = false;
-		
+		*/
 		// This may need to be moved to the end with the rest of the updates
 		gRenderer.Update(universalXPos, universalYPos);
 		

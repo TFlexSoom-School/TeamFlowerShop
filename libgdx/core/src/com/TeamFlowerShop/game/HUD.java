@@ -27,6 +27,10 @@ public class HUD {
 
 	Rectangle BarRect;
 	private int Kills;
+	public int getKills() {
+		return Kills;
+	}
+
 	String printedKills = "";
 	
 	boolean X, Y;

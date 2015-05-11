@@ -2,8 +2,8 @@ package com.TeamFlowerShop.game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.*;
 
 public class Level {
 
@@ -41,8 +41,26 @@ public class Level {
 	}
 	
 	private ArrayList<ArrayList<String>> Rows = new ArrayList<ArrayList<String>>();
-	private int originXOffset = 5;
-	private int originYOffset = 5;
+	
+	private int originXOffset = 12-((Gdx.graphics.getWidth()/128)/2);
+	private int originYOffset = 9-((Gdx.graphics.getHeight()/128)/2);
+	
+	public int getOriginXOffset() {
+		return originXOffset;
+	}
+
+	public void setOriginXOffset(int originXOffset) {
+		this.originXOffset = originXOffset;
+	}
+
+	public int getOriginYOffset() {
+		return originYOffset;
+	}
+
+	public void setOriginYOffset(int originYOffset) {
+		this.originYOffset = originYOffset;
+	}
+
 	private int pieceSize = 128;
 	
 	public static Level GetLevel(int levelNumber)
