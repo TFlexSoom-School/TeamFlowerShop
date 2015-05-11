@@ -27,7 +27,8 @@ public class TLoT extends ApplicationAdapter {
 	boolean showLossScreen;
 	Level level;
 	Music themeSong;
-    int intialHealth=256;	
+    int intialHealth=256;
+    boolean escapePressed;
     
 	@Override
 	public void create () {
@@ -44,7 +45,8 @@ public class TLoT extends ApplicationAdapter {
 		lossScreen = new GameOverScreen(universalXPos, universalYPos);
 		level = Level.GetLevel(1);
 		gRenderer = new Ground(level);
-		themeSong = Gdx.audio.newMusic(Gdx.files.internal("Illuminati.mp3"));		
+		themeSong = Gdx.audio.newMusic(Gdx.files.internal("Illuminati.mp3"));
+		escapePressed = false;
 	}
 	
 
@@ -98,11 +100,7 @@ public class TLoT extends ApplicationAdapter {
 	
 	// Update function to run every update. This is called in the render function
 	public void Update() {
-		if (Gdx.input.isButtonPressed(Input.Keys.DEL) && timer > 100)
-		{
-			spawnTimer = 1;
-		}
-		//enemeesoeoeoejrrirjfsoeiroekoeoejgorjrogjroTtristaltav
+		
 		playerRect = new Rectangle((Gdx.graphics.getWidth()  / 2) - (player.img.getWidth()  / 2), 
 								   (Gdx.graphics.getHeight() / 2) - (player.img.getHeight() / 2), 
 								    player.img.getWidth(), player.img.getHeight());
@@ -113,7 +111,15 @@ public class TLoT extends ApplicationAdapter {
 			Initialize();
 			init = !init;
 		}
-		
+		else if ((Gdx.input.isKeyPressed(Input.Keys.ESCAPE)))
+		{			
+			spawnTimer = 1;
+		}
+		else
+		{
+			spawnTimer = 50;
+		}
+		//enemeesoeoeoejrrirjfsoeiroekoeoejgorjrogjroTtristaltav
 		// Code to deal with the walls made with the right mouse click. I'll leave this here for now.
 		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
 			thisFrameRMD = true;
@@ -136,7 +142,7 @@ public class TLoT extends ApplicationAdapter {
 		//velocityX = (float)Math.cos(rotation) * 20;//simple trig to find how fast up it should go and how fast to the side
 		//velocityY = (float)Math.sin(rotation) * 20;//a search on the trig unit circle should come up with something if you want to know more
 		
-		if (timer % 5 == 0 && Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+		if (timer % 15 == 0 && Gdx.input.isButtonPressed(Input.Buttons.LEFT))
 			bullets.add(new Bullet(MousePosX, MousePosY));
 			
 			//bullets.add(new Bullet(velocityX, velocityY, 
