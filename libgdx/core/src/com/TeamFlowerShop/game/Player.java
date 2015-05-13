@@ -36,6 +36,9 @@ public class Player {
 	float originX;
 	float originY;	
 	
+	// Variables to easily fix the bullet velocity "bug"
+	int trueVelX, trueVelY;
+	
 	public Ground getGround() {
 		return ground;
 	}
@@ -123,6 +126,8 @@ public class Player {
 	{
 		velX = 0; 
 		velY = 0;
+		trueVelX = 0;
+		trueVelY = 0;
 		
 		// this big block handles movement
 		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
@@ -166,14 +171,19 @@ public class Player {
 		{
 			posX += velX;
 			posY += velY;
+			
+			trueVelX = velX;
+			trueVelY = velY;
 		}	
 		else if(!currentLevel.OverlapsPieceType(new Rectangle(potentialX+posX, playerY+posY, img.getHeight(), img.getWidth()), Pieces.Wall))
 		{
 			posX += velX;
+			trueVelX = velX;
 		}
 		else if(!currentLevel.OverlapsPieceType(new Rectangle(playerX+posX, potentialY+posY, img.getHeight(), img.getWidth()), Pieces.Wall))
 		{
 			posY += velY;
+			trueVelY = velY;
 		}
 		//Exists for diagnostic drawing only, probably should be wrapped in an if statement
 		potentialRect = new Rectangle(potentialX, potentialY, img.getHeight(), img.getWidth());

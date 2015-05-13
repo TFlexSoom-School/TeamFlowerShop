@@ -164,8 +164,8 @@ public class TLoT extends ApplicationAdapter {
 		
 		for (Bullet b : bullets)
 		{//updates each bullet in the list of bullets
-			b.Update(/* universalXPos + (Gdx.graphics.getWidth()  / 2) */ player.velX, 
-					 /* universalYPos + (Gdx.graphics.getHeight() / 2) */ player.velY);
+			b.Update(/* universalXPos + (Gdx.graphics.getWidth()  / 2) */ player.trueVelX, 
+					 /* universalYPos + (Gdx.graphics.getHeight() / 2) */ player.trueVelY);
 		}
 		
 		for (Wall w : walls)
